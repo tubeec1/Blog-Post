@@ -7,9 +7,9 @@ let con = sql.createPool({
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   port: process.env.DB_PORT,
+  waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
-  waitForConnections: true
 });
 
 module.exports = con.promise();

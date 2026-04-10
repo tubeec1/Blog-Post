@@ -1,29 +1,16 @@
-let jwtHandler =require("../utilits/jwt")
-let authMidle = async(req , res ,next)=>{
-let authorization = req.headers.authorization;
+let jwtHandler = require("../utilits/jwt");\
+let AppError = require("../utilits/AppError")
 
- if(!authorization){
-    return res.json({
-        status:false,
-        message:"There is nontoken"
-    });
- }
+let authMidle = async (req, res, next) => {
+  let authorization = req.headers.authorization;
 
-
- let token=authorization.split(" ")[1];
-
- let response = await jwtHandler.verifyToken(token);
- 
-
- if(!response.status){
-    return res.json(response)
+  if (!authorization) {
+    throw new AppError("There is no token", 401)
   }
- let user ={
-  id:response.result.id,
-  role:response.result.role,
- };
- req.user = user;
- next();
+  let token = authorization.split(" ")[1];
+  let response = await jwtHandler.verifyToken(token);
+  req.user = response;
+  next();
 };
 
-module.exports =authMidle;
+module.exports = authMidle;
