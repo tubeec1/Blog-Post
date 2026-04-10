@@ -2,8 +2,6 @@ let dotenv = require("dotenv");
 dotenv.config();
 let app = require("./app");
 
-let port = 5000;
-
-app.listen(port, () => {
-  console.log(`server waxaa laga dhageysanayaa ${port}`);
+app.listen(process.env.PORT, () => {
+  console.log(`server waxaa laga dhageysanayaa ${process.env.PORT}`);
 });
