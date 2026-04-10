@@ -2,14 +2,10 @@ let express = require("express");
 
 let app = express();
 
-app.get("/posts", (req, res) => {
-  res.json("wuu shaqeeyay");
-});
-
-app.post("/posts", (req, res) => {
+app.post("api/categories/create", (req, res) => {
   res.json({
     status: true,
-    message: "posted",
+    message: "success",
   });
 });
 
