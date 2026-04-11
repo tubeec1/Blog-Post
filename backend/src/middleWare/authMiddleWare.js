@@ -1,4 +1,4 @@
-let jwtHandler = require("../utilits/jwt");\
+let jwtHandler = require("../utilits/jwt")
 let AppError = require("../utilits/AppError")
 
 let authMidle = async (req, res, next) => {
