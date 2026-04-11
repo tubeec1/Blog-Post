@@ -6,11 +6,7 @@ let authMidleWareValidation = (req, res, next) => {
   console.log("errors", errors);
 
   if (!errors.isEmpty()) {
-    let messagesData = [];
-    errors.errors.map((err) => {
-      messagesData += err.msg;
-    });
-    throw new AppError(JSON.stringify(messagesData), 400);
+    throw new Error(errors.errors[0].msg);
   }
   next();
 };
