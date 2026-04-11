@@ -72,10 +72,24 @@ let updateProfile = async (
     if (String(password).length < 8) {
       throw new AppError("password must be min of 8 digits", 400);
     } else {
-      password = password;
+      password = await bcrypt.hash(password, 10);
     }
   }
-  // let response = await authModel.updateProfile();
+  let response = await authModel.updateProfile(
+    name,
+    email,
+    password,
+    gender,
+    role,
+    profileImage,
+  );
+  if (response < 1) {
+    throw new AppError("nothing updated", 400);
+  }
+  return {
+    status: true,
+    message: "Updated Successfully",
+  };
 };
 
-module.exports = { Signup, login };
+module.exports = { Signup, login, updateProfile };

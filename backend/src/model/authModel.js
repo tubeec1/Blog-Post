@@ -20,4 +20,19 @@ let findByEmail = async (email) => {
   return rows[0];
 };
 
-module.exports = { Signup, findByEmail };
+let updateProfile = async (
+  name,
+  email,
+  password,
+  gender,
+  role,
+  profileImage,
+) => {
+  let response = await con.execute(
+    "update users set name=?, password=?, gender=?, role=?, profile_image=? where email=?",
+    [name, password, gender, role, profileImage, email],
+  );
+  return response[0].affectedRows;
+};
+
+module.exports = { Signup, findByEmail, updateProfile };

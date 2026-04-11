@@ -1,9 +1,8 @@
-let authservice = require("../service/authServer");
+let authservice = require("../service/authService");
 const AppError = require("../utilits/AppError");
 let asyncHandler = require("../utilits/AsynHandler");
 let Signup = asyncHandler(async (req, res) => {
   let data = req.body;
-  console.log("maxaa ku jira", req.body);
   let name = data.name;
   let email = data.email;
   let password = data.password;
@@ -35,12 +34,11 @@ let updateProfile = asyncHandler(async (req, res, next) => {
   let { name, email, password, gender } = data;
   let role = data.role || "user";
   let profileImage = null;
-  console.log(req.file);
   if (!req.file && gender == "male") {
     profileImage = "profileImages/manProfileImage.jpg";
   } else if (!req.file && gender == "female") {
     profileImage = "profileImages/womanProfileImage.jpg";
-  } else {
+  } else if (req.file) {
     profileImage = `profileImages/${req.file.filename}`;
   }
   let response = await authservice.updateProfile(
@@ -51,6 +49,7 @@ let updateProfile = asyncHandler(async (req, res, next) => {
     role,
     profileImage,
   );
+  return res.status(200).json(response);
 });
 
 let login = asyncHandler(async (req, res) => {
