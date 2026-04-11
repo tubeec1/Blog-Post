@@ -1,21 +1,23 @@
 let con = require("../config/conn");
-let Signup = async(name ,email, password ,role ,profileImges)=>{
-const [result] = await con.execute("insert into users (name , email, password , role ,profile_Image)values(?,?,?,?,?)" , [name , email, password ,role, profileImges])
+let Signup = async (name, email, gender, password, role, profileImge) => {
+  const [result] = await con.execute(
+    "insert into users (name , email, gender, password , role ,profile_Image)values(?,?,?,?,?,?)",
+    [name, email, gender, password, role, profileImge],
+  );
 
-const [rows]= await con.execute("SELECT *from users where id =?",
-  [result.insertId]
-);
+  const [rows] = await con.execute("SELECT *from users where id =?", [
+    result.insertId,
+  ]);
 
-return rows[0];
-}
+  return rows[0];
+};
 
-let findByEmail = async(email)=>{
-    const [rows] = await con.execute("select * from users where email =?",
-        [email]
-    );
-    
-    
-    return rows[0];
-}
+let findByEmail = async (email) => {
+  const [rows] = await con.execute("select * from users where email =?", [
+    email,
+  ]);
 
-module.exports={Signup , findByEmail}
+  return rows[0];
+};
+
+module.exports = { Signup, findByEmail };
