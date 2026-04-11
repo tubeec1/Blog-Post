@@ -1,11 +1,11 @@
-let jwtHandler = require("../utilits/jwt")
-let AppError = require("../utilits/AppError")
+let jwtHandler = require("../utilits/jwt");
+let AppError = require("../utilits/AppError");
 
-let authMidle = async (req, res, next) => {
+let authMiddleware = async (req, res, next) => {
   let authorization = req.headers.authorization;
 
   if (!authorization) {
-    throw new AppError("There is no token", 401)
+    throw new AppError("There is no token", 401);
   }
   let token = authorization.split(" ")[1];
   let response = await jwtHandler.verifyToken(token);
@@ -13,4 +13,4 @@ let authMidle = async (req, res, next) => {
   next();
 };
 
-module.exports = authMidle;
+module.exports = authMiddleware;
