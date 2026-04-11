@@ -1,6 +1,6 @@
 let jwt = require("jsonwebtoken");
 const AppError = require("./AppError");
-let generation = (user) => {
+let generateToken = (user) => {
   let payload = { id: user.id, role: user.role };
 
   let token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "1h" });
@@ -27,4 +27,4 @@ let verifyToken = (token) => {
   }
 };
 
-module.exports = { generation, verifyToken };
+module.exports = { generateToken, verifyToken };

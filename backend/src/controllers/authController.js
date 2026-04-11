@@ -34,7 +34,23 @@ let updateProfile = (req, res, next) => {
   let data = req.body;
   let { name, email, password, gender } = data;
   let role = data.role || "user";
+  let profileImage = null;
   console.log(req.file);
+  if (!req.file && gender == "male") {
+    profileImage = "profileImages/manProfileImage.jpg";
+  } else if (!req.file && gender == "female") {
+    profileImage = "profileImages/womanProfileImage.jpg";
+  } else {
+    profileImage = `profileImages/${req.file.filename}`;
+  }
+  res.json({
+    name,
+    email,
+    password,
+    gender,
+    role,
+    profileImage,
+  });
 };
 
 let login = asyncHandler(async (req, res) => {

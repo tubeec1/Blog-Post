@@ -13,7 +13,7 @@ let signupValitor = [
     .isLength({ min: 8 })
     .withMessage("possword should atleast 8 digit")
     .isStrongPassword()
-    .withMessage("it must be  is stronge"),
+    .withMessage("password must be strong"),
   body("gender").notEmpty().withMessage("Either male or female required"),
 ];
 
@@ -24,13 +24,6 @@ let updateProfileValidator = [
     .withMessage("Email is required")
     .isEmail()
     .withMessage("Enter valid email"),
-  body("password")
-    .notEmpty()
-    .withMessage("EnterPassword")
-    .isLength({ min: 8 })
-    .withMessage("possword should atleast 8 digit")
-    .isStrongPassword()
-    .withMessage("it must be  is stronge"),
   body("gender").notEmpty().withMessage("Either male or female required"),
 ];
 

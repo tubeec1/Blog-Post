@@ -7,18 +7,19 @@ let {
   loginValidator,
   updateProfileValidator,
 } = require("../vilidators/authValidation");
-let authMiddlewareValidor = require("../middleWare/validationMiddleWare");
+let { authMidleWareValidation } = require("../middleWare/validationMiddleWare");
 const router = express.Router();
 router.post(
   "/signup",
   signupValitor,
-  authMiddlewareValidor.authMidleWareValidation,
+  authMidleWareValidation,
   authController.Signup,
 );
 router.put(
   "/update_profile",
   upload.single("profileImage"),
   updateProfileValidator,
+  authMidleWareValidation,
   authController.updateProfile,
 );
 router.post("/login", authController.login);

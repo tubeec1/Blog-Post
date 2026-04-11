@@ -26,32 +26,31 @@ let Signup = async (name, email, gender, password, role, profileImge) => {
 };
 
 let login = async (email, password) => {
-  const checkEmail = await authModel.findByEmail(email);
+  const user = await authModel.findByEmail(email);
 
-  if (!checkEmail) {
-    return {
-      status: false,
-      message: "this email isnot exist",
-    };
+  if (!user) {
+    throw new AppError("this email is not exist", 404);
   }
 
-  let isMatch = await bcrypt.compare(String(password), checkEmail.password);
+  let isMatch = await bcrypt.compare(String(password), user.password);
 
   if (!isMatch) {
     throw new AppError("increct password", 401);
   }
-  let token = await jwtHandler.generation(checkEmail);
-  let xog = {
-    id: checkEmail.id,
-    name: checkEmail.name,
-    email: checkEmail.email,
-    profileImge: checkEmail.profileImge,
+  let token = await jwtHandler.generateToken(user);
+  let userData = {
+    id: user.id,
+    name: user.name,
+    email: user.email,
+    gender: user.gender,
+    role: user.role,
+    profileImge: user.profile_image,
   };
   return {
     status: true,
     message: "successfully login",
     token: token,
-    user: xog,
+    user: userData,
   };
 };
 
