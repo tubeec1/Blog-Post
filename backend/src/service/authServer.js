@@ -54,4 +54,28 @@ let login = async (email, password) => {
   };
 };
 
+let updateProfile = async (
+  name,
+  email,
+  password,
+  gender,
+  role,
+  profileImage,
+) => {
+  let user = await authModel.findByEmail(email);
+  if (!user) {
+    throw new AppError("this user not exist", 404);
+  }
+  if (!password) {
+    password = user.password;
+  } else {
+    if (String(password).length < 8) {
+      throw new AppError("password must be min of 8 digits", 400);
+    } else {
+      password = password;
+    }
+  }
+  // let response = await authModel.updateProfile();
+};
+
 module.exports = { Signup, login };

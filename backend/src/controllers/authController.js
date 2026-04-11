@@ -30,7 +30,7 @@ let Signup = asyncHandler(async (req, res) => {
   return res.json(response);
 });
 
-let updateProfile = (req, res, next) => {
+let updateProfile = asyncHandler(async (req, res, next) => {
   let data = req.body;
   let { name, email, password, gender } = data;
   let role = data.role || "user";
@@ -43,15 +43,15 @@ let updateProfile = (req, res, next) => {
   } else {
     profileImage = `profileImages/${req.file.filename}`;
   }
-  res.json({
+  let response = await authservice.updateProfile(
     name,
     email,
     password,
     gender,
     role,
     profileImage,
-  });
-};
+  );
+});
 
 let login = asyncHandler(async (req, res) => {
   let data = req.body;
