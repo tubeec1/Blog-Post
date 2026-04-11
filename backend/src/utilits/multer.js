@@ -9,13 +9,24 @@ let storage = multer.diskStorage({
       cb(null, "public/postImages/images/");
     } else if ((file.filename = "postThumbnail")) {
       cb(null, "public/postImages/thumbnails/");
+      cb(null, "public/profileImages/");
+    } 
+    else if (file.fieldname === "image") {
+        cb(null, "public/postImages/postImage/");
+    } 
+    else if (file.fieldname === "thumbnail") {
+      cb(null, "public/postImages/postThumbnail/");
+    } 
+    else {
+      cb(new Error("Invalid field name"), false);
+
     }
   },
 
   filename: (req, file, cb) => {
     cb(
       null,
-      `${Date.now()}_${Math.floor(Math.random() * 10)}_${file.originalname}`,
+      `${Date.now()}_${Math.floor(Math.random() * 10)}_${file.originalname}`
     );
   },
 });

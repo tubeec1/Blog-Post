@@ -7,8 +7,18 @@ const upload = require("../utilits/multer");
 router.post(
   "/create",
   authMiddleware,
-  upload.single("image"),
+  upload.fields([
+  { name: "image", maxCount: 1 },
+  { name: "thumbnail", maxCount: 1 }
+]),
   postController.createPost
 );
-
+router.get("/readPosts",postController.getAllPosts);
+router.get("/readPost/:id",postController.getPostById);
+router.put(  "/update/:id",
+  upload.fields([
+    { name: "image", maxCount: 1 },
+    { name: "thumbnail", maxCount: 1 },
+  ]), postController.updatePost)
+router.delete("/delete/:id",postController.deletePost)
 module.exports = router;;

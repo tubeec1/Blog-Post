@@ -1,14 +1,69 @@
+
 const postModel = require("../model/postModel");
 
-const createPost = async (title, content, image, user_id ,slug) => {
-  let response= await postModel.createPost(title, content, image, user_id ,slug );
-
-  return res.json({
-    success: true,
-    message: "Post created successfully",
-    post: response,
-  });
-
+const createPost = async (title, slug, content, image, thumbnail) => {
+  let response = await postModel.createPost(title, slug, content, image, thumbnail);
+ 
+    return {
+      status: true,
+      message: "Post created successfully",
+      data: response,
+    };
 };
 
-module.exports = { createPost };
+
+
+
+
+const getAllPosts = async () => {
+  let response= await postModel.getAllPosts();
+
+  return{
+    status:true,
+      message:"successfully Reading",
+    data:response,
+  }
+};
+
+
+const getPostById = async (id) => {
+  let response= await postModel.getPostById(id);
+    return{
+    status:true,
+    data:response,
+  }
+};
+const updatePost = async (id, title, slug, content, image, thumbnail) => {
+  let response =await postModel.updatePost(
+    id,
+    title,
+    slug,
+    content,
+    image,
+    thumbnail
+  );
+   return{
+    status:true,
+    message:"successfully updated",
+    data:response
+   }
+
+};
+const deletePost = async (id) => {
+  let response= await postModel.deletePost(id);
+  return{
+    status:true,
+    message:"successfully deleted",
+  
+
+  }
+};
+
+
+module.exports = {
+  createPost,
+  getAllPosts,
+  getPostById,
+  updatePost,
+  deletePost,
+};
