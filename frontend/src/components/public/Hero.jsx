@@ -109,7 +109,7 @@ export default function HeroSection({ onToast }) {
             >
               <a
                 href="#blogs"
-                className="relative overflow-hidden group px-7 py-3.5 bg-brand-500 hover:bg-brand-600 text-white font-semibold rounded-xl transition-colors duration-200 text-sm flex items-center gap-2.5 shadow-lg shadow-brand-500/20 hover:shadow-brand-500/30"
+                className="relative overflow-hidden group px-7 py-3.5 bg-brand-500 hover:bg-brand-600 text-black font-semibold rounded-xl transition-colors duration-200 text-sm flex items-center gap-2.5 shadow-lg shadow-brand-500/20 hover:shadow-brand-500/30"
               >
                 <span className="relative z-10 flex items-center gap-2.5">
                   Explore Articles
@@ -118,7 +118,7 @@ export default function HeroSection({ onToast }) {
               </a>
               <button
                 onClick={() => onToast("Subscribed successfully!", "success")}
-                className="px-7 py-3.5 border-2 border-ink-900 text-ink-900 hover:bg-ink-900 hover:text-white font-semibold rounded-xl transition-all duration-300 text-sm"
+                className="px-7 py-3.5 border-2 border-ink-900 text-ink-900 hover:bg-ink-900 hover:text-black font-semibold rounded-xl transition-all duration-300 text-sm"
               >
                 Subscribe Free
               </button>
