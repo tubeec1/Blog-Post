@@ -52,6 +52,13 @@ let updateProfile = asyncHandler(async (req, res, next) => {
   return res.status(200).json(response);
 });
 
+let getProfile = asyncHandler(async (req, res) => {
+  console.log("user from auth controller:", req.user);
+  let { id, role } = req.user;
+  let response = await authservice.getProfile(id);
+  return res.json(response);
+});
+
 let login = asyncHandler(async (req, res) => {
   let data = req.body;
   let email = data.email;
@@ -60,4 +67,4 @@ let login = asyncHandler(async (req, res) => {
 
   return res.json(response);
 });
-module.exports = { Signup, login, updateProfile };
+module.exports = { Signup, login, updateProfile, getProfile };

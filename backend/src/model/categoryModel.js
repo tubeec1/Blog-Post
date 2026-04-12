@@ -1,12 +1,13 @@
 const con = require("../config/conn");
 
 const CategoryModel = {
-  create: async (name, slug) => {
+  create: async (name, slug, id) => {
     const query = `
       INSERT INTO categories (name, slug, user_id)
       VALUES (?, ?, ?)
     `;
     const [result] = await con.execute(query, [name, slug, id]);
+    console.log("Category created with ID:", result.insertId);
     return result;
   },
 

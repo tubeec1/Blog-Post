@@ -25,6 +25,27 @@ let Signup = async (name, email, gender, password, role, profileImge) => {
   };
 };
 
+let getProfile = async (id) => {
+  let user = await authModel.findById(id);
+  if (!user) {
+    throw new AppError("this user not exist", 404);
+  }
+  let userData = {
+    id: user.id,
+    name: user.name,
+    email: user.email,
+    gender: user.gender,
+    role: user.role,
+    profileImage: user.profile_image,
+  };
+
+  return {
+    status: true,
+    message: "Profile retrieved successfully",
+    user: userData,
+  };
+};
+
 let login = async (email, password) => {
   const user = await authModel.findByEmail(email);
 
@@ -92,4 +113,4 @@ let updateProfile = async (
   };
 };
 
-module.exports = { Signup, login, updateProfile };
+module.exports = { Signup, login, updateProfile, getProfile };

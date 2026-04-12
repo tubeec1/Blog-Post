@@ -19,6 +19,13 @@ let findByEmail = async (email) => {
 
   return rows[0];
 };
+let findById = async (id) => {
+  const [rows] = await con.execute("select * from users where id =?", [
+    String(id),
+  ]);
+
+  return rows[0];
+};
 
 let updateProfile = async (
   name,
@@ -35,4 +42,4 @@ let updateProfile = async (
   return response[0].affectedRows;
 };
 
-module.exports = { Signup, findByEmail, updateProfile };
+module.exports = { Signup, findByEmail, updateProfile, findById };

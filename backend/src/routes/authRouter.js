@@ -8,6 +8,7 @@ let {
   updateProfileValidator,
 } = require("../vilidators/authValidation");
 let { authMidleWareValidation } = require("../middleWare/validationMiddleWare");
+const authMiddleware = require("../middleWare/authMiddleWare");
 const router = express.Router();
 router.post(
   "/signup",
@@ -22,6 +23,13 @@ router.put(
   authMidleWareValidation,
   authController.updateProfile,
 );
-router.post("/login", authController.login);
+
+router.get("/profile", authMiddleware, authController.getProfile);
+router.post(
+  "/login",
+  loginValidator,
+  authMidleWareValidation,
+  authController.login,
+);
 
 module.exports = router;
