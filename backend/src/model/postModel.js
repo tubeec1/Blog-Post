@@ -14,7 +14,7 @@ module.exports = { createPost };
 
 
 
-// GET ALL POSTS
+
 const getAllPosts = async () => {
   const [rows] = await con.execute(
     "SELECT * FROM posts ORDER BY id DESC"
@@ -23,7 +23,7 @@ const getAllPosts = async () => {
   return rows;
 };
 
-// GET SINGLE POST
+
 const getPostById = async (id) => {
   const [rows] = await con.execute(
     "SELECT * FROM posts WHERE id = ?",

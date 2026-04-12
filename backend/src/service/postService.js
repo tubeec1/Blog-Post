@@ -15,8 +15,8 @@ const createPost = async (title, slug, content, image, thumbnail) => {
 
 
 
-const getAllPosts = async () => {
-  let response= await postModel.getAllPosts();
+const getAllPosts = async (page , limit ,offset) => {
+  let response= await postModel.getAllPosts(page ,limit ,offset);
 
   return{
     status:true,
