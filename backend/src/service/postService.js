@@ -43,23 +43,39 @@ const getPostById = async (id) => {
     data: response,
   };
 };
-const updatePost = async (id, title, slug, content, image, thumbnail) => {
+const updatePost = async (
+  userId,
+  categoryId,
+  postId,
+  title,
+  slug,
+  content,
+  image,
+  thumbnail,
+) => {
   let response = await postModel.updatePost(
-    id,
+    userId,
+    categoryId,
+    postId,
     title,
     slug,
     content,
     image,
     thumbnail,
   );
+  if (response < 1) {
+    throw new Error("Post not found or no changes made", 404);
+  }
   return {
     status: true,
     message: "successfully updated",
-    data: response,
   };
 };
-const deletePost = async (id) => {
-  let response = await postModel.deletePost(id);
+const deletePost = async (postId) => {
+  let response = await postModel.deletePost(postId);
+  if (response < 1) {
+    throw new AppError("Post not found", 404);
+  }
   return {
     status: true,
     message: "successfully deleted",

@@ -48,16 +48,16 @@ const getPostById = asyncHandler(async (req, res) => {
 });
 const updatePost = asyncHandler(async (req, res) => {
   const { postId } = req.params;
-  const { title, slug, content } = req.body;
+  console.log("post id", postId);
+  const { title, slug, content, categoryId } = req.body;
+  console.log("req body", req.body);
   let { id, role } = req.user;
+  let userId = id;
+  console.log("user id", userId);
+  console.log("req files", req.files);
 
   if (role != "admin") {
     throw new AppError("Only admin can update posts", 403);
-  }
-  const post = await postService.getPostById(postId);
-
-  if (!post) {
-    throw new AppError("Post not found", 404);
   }
 
   const image = req.files?.image
@@ -69,7 +69,9 @@ const updatePost = asyncHandler(async (req, res) => {
     : post.thumbnail;
 
   let response = await postService.updatePost(
-    id,
+    userId,
+    categoryId,
+    postId,
     title,
     slug,
     content,
@@ -81,6 +83,7 @@ const updatePost = asyncHandler(async (req, res) => {
 });
 const deletePost = asyncHandler(async (req, res) => {
   const { postId } = req.params;
+  console.log("post id", postId);
   let { id, role } = req.user;
 
   if (role != "admin") {

@@ -4,6 +4,7 @@ const AppError = require("../utilits/AppError");
 
 const createCategory = asyncHandler(async (req, res) => {
   const { name, slug } = req.body;
+  console.log("req body", req.body);
   let { id, role } = req.user;
 
   if (role !== "admin") {

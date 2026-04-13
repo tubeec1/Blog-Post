@@ -7,20 +7,20 @@ let {
   loginValidator,
   updateProfileValidator,
 } = require("../vilidators/authValidation");
-let { authMidleWareValidation } = require("../middleWare/validationMiddleWare");
+const { validationMiddleware } = require("../middleWare/validationMiddleWare");
 const authMiddleware = require("../middleWare/authMiddleWare");
 const router = express.Router();
 router.post(
   "/signup",
   signupValitor,
-  authMidleWareValidation,
+  validationMiddleware,
   authController.Signup,
 );
 router.put(
   "/update_profile",
   upload.single("profileImage"),
   updateProfileValidator,
-  authMidleWareValidation,
+  validationMiddleware,
   authController.updateProfile,
 );
 
@@ -28,7 +28,7 @@ router.get("/profile", authMiddleware, authController.getProfile);
 router.post(
   "/login",
   loginValidator,
-  authMidleWareValidation,
+  validationMiddleware,
   authController.login,
 );
 
