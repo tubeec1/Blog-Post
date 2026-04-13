@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
-    <div className="flex justify-center items-center py-10 bg-white shadow-md">
+    <div className="flex flex-col md:flex-row justify-center items-center py-10 bg-white shadow-md">
       <h1>Bloggers</h1>
-      <nav className="flex gap-5 ml-10">
+      <nav className="flex flex-col md:flex-row gap-5 ml-10">
         <Link to="/">Home</Link>
         <Link to="/about">About</Link>
         <Link to="/blog">Blog</Link>

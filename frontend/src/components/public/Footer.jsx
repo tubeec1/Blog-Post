@@ -31,7 +31,7 @@ const Footer = () => {
       <div className="bg-blue-500 text-white p-4 text-xl">
         <p>Get connected with us on social media</p>
       </div>
-      <div className="bg-[darkblue] text-white p-10 grid grid-cols-4 gap-10">
+      <div className="bg-[darkblue] text-white p-10 grid grid-cols-1 md:grid-cols-4 gap-10">
         {footer.map((item, index) => {
           return (
             <div key={index}>
