@@ -3,10 +3,7 @@ const postService = require("../service/postService");
 const AppError = require("../utilits/AppError");
 
 const createPost = asyncHandler(async (req, res) => {
-  console.log("body:", req.body);
-  console.log("file:", req.files);
-
-  let { title, slug, content } = req.body;
+  let { title, slug, content, categoryId } = req.body;
   const image = req.files.image
     ? `postImages/postImage/${req.files.image[0].filename}`
     : null;
@@ -15,12 +12,15 @@ const createPost = asyncHandler(async (req, res) => {
     ? `postImages/postThumbnail/${req.files.thumbnail[0].filename}`
     : null;
   let { id, role } = req.user;
+  let userId = id;
 
   if (role != "admin") {
     throw new AppError("Only adminscan create posts", 403);
   }
 
   let response = await postService.createPost(
+    userId,
+    categoryId,
     title,
     slug,
     content,
@@ -31,10 +31,10 @@ const createPost = asyncHandler(async (req, res) => {
 });
 
 const getAllPosts = asyncHandler(async (req, res) => {
-  let page = parseInt(req.query.page) || 1
-  let limit =parseInt(req.query.limit) ||3
-  let offset = (page -1)*limit
-  let response = await postService.getAllPosts( page , limit ,offset);
+  let page = parseInt(req.query.page) || 1;
+  let limit = parseInt(req.query.limit) || 3;
+  let offset = (page - 1) * limit;
+  let response = await postService.getAllPosts(page, limit, offset);
 
   return res.json(response);
 });
