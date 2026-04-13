@@ -5,6 +5,7 @@ const AppError = require("../utilits/AppError");
 const createCategory = asyncHandler(async (req, res) => {
   const { name, slug } = req.body;
   let { id, role } = req.user;
+
   if (role !== "admin") {
     throw new AppError("Only admin can create category", 403);
   }

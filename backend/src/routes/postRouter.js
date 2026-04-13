@@ -13,7 +13,7 @@ router.post(
   ]),
   postController.createPost,
 );
-router.get("/readPosts", postController.getAllPosts);
+router.get("/read", postController.getAllPosts);
 router.get("/readPost/:postId", postController.getPostById);
 router.put(
   "/update/:id",
