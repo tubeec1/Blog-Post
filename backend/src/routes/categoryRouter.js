@@ -14,7 +14,6 @@ const {
   deleteCategoryValidator,
 } = require("../vilidators/categoryValidator");
 const { validationMiddleware } = require("../middleWare/validationMiddleWare");
-const { createPostValidator } = require("../vilidators/postValidator");
 
 router.post(
   "/create",
