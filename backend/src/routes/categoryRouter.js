@@ -9,16 +9,17 @@ const {
 } = require("../controllers/categoryController");
 const authMiddleware = require("../middleWare/authMiddleWare");
 const {
+  createCategoryValidator,
   updateCategoryValidator,
   deleteCategoryValidator,
-} = require("../vilidators/categoryValidation");
+} = require("../vilidators/categoryValidator");
 const { validationMiddleware } = require("../middleWare/validationMiddleWare");
 const { createPostValidator } = require("../vilidators/postValidator");
 
 router.post(
   "/create",
   authMiddleware,
-  createPostValidator,
+  createCategoryValidator,
   validationMiddleware,
   createCategory,
 );
