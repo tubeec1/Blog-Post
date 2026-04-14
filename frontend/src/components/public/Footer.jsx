@@ -43,6 +43,28 @@ const Footer = () => {
         </div>
       </div>
 
+      <div className="bg-[darkblue] text-white p-10 grid grid-cols-1 md:grid-cols-4 gap-10">
+        {footer.map((item, index) => {
+          return (
+            <div key={index}>
+              <h1 className="text-2xl font-bold mb-4 text-white">
+                {item.title}
+              </h1>
+              <p>{item.desc}</p>
+              <div
+                className="flex flex-col
+              "
+              >
+                {item.links &&
+                  item.links.map((link, linkIndex) => {
+                    if (link == "Home") {
+                      return <Link to={`/`}>{link}</Link>;
+                    }
+                    return <Link to={`/${link.toLowerCase()}`}>{link}</Link>;
+                  })}
+              </div>
+
+
       
       <div className="max-w-[1200px] mx-auto px-6 py-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
         {footer.map((item, index) => (
@@ -84,7 +106,7 @@ const Footer = () => {
                       {link}
                     </Link>
                   );
-                })}
+                
             </div>
           </div>
         ))}
