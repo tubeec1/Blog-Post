@@ -22,10 +22,25 @@ const AboutUs = () => {
             looking for some interesting reads, we hope you find something that
             resonates with you. Thank you for being a part of our community!
           </p>
+          <div className="">
+            <div className="flex flex-col md:flex-row gap-5 mx-auto">
+              {stats.map((stat) => (
+                <div
+                  key={stat.id}
+                  className="shadow-md bg-white px-6 py-10 rounded-xl text-center w-[100%] md:w-[30%]"
+                >
+                  <h3 className="text-gray-400">{stat.label}</h3>
+                  <p className="font-bold text-xl bg-gradient-to-tr from-pink-500 to-orange-700 bg-clip-text text-transparent transition ">
+                    {stat.value}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
         <div>
           <img
-            className="w-[100%] h-[100%] md:w-[120vw] md:h-[300px] object-cover"
+            className="w-[100%] h-[100%] md:w-[120vw] md:h-[400px] object-cover"
             src="../../../src/assets/hero.png"
             alt=""
           />
@@ -46,10 +61,7 @@ const AboutUs = () => {
           ))}
         </div>
       </div>
-      
-      
     </div>
-    
   );
 };
 
