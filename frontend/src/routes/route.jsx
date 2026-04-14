@@ -7,6 +7,7 @@ import Contact from "../pages/publicLayout/Contact";
 import Login from "../pages/publicLayout/Login";
 import Signup from "../pages/publicLayout/Signup";
 import DashboardLayout from "../layouts/DashboardLayout";
+import BlogDetails from "../pages/publicLayout/BlogDetails";
 import React from "react";
 
 let route = createBrowserRouter([
@@ -25,6 +26,10 @@ let route = createBrowserRouter([
       {
         path: "blog",
         element: <Blog />,
+      },
+      {
+        path: "blogDetails/:id",
+        element: <BlogDetails />,
       },
       {
         path: "/contact",

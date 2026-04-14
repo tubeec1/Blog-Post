@@ -46,21 +46,6 @@ const AboutUs = () => {
           />
         </div>
       </div>
-      <div className=" bg-gray-50 p-20 w-[100vw]">
-        <div className="md:w-[60vw] flex flex-col md:flex-row gap-15 mx-auto">
-          {stats.map((stat) => (
-            <div
-              key={stat.id}
-              className="shadow-md bg-white px-6 py-15 rounded-xl text-center w-[100%] md:w-[30%]"
-            >
-              <h3>{stat.label}</h3>
-              <p className="font-bold text-xl bg-gradient-to-tr from-pink-500 to-orange-700 bg-clip-text text-transparent transition ">
-                {stat.value}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
     </div>
   );
 };
