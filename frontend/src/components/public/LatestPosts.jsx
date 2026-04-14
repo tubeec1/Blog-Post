@@ -13,8 +13,7 @@ let posts = [
   {
     id: 2,
     title: "5 Healthy Habits for a Better Life",
-    content:
-      "Maintaining a healthy lifestyle doesn't have to be complicated.",
+    content: "Maintaining a healthy lifestyle doesn't have to be complicated.",
     image: "https://images.unsplash.com/photo-1490645935967-10de6ba17061",
     categogy: "Health",
     username: "Halima Adow",
@@ -58,12 +57,11 @@ const LatestPosts = () => {
     <section className="py-10 px-6 max-w-[1200px] mx-auto ">
       <h3 className="text-3xl font-bold mb-10">Latest Posts</h3>
 
-     
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {posts.map((post) => (
           <div
             key={post.id}
-            className="bg-white shadow-md rounded-xl overflow-hidden hover:shadow-xl transition duration-300 hover:-translate-y-2"
+            className="bg-white shadow-md rounded-xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition duration-300 "
           >
             <img
               src={post.image}
@@ -82,9 +80,7 @@ const LatestPosts = () => {
                 {post.content.substring(0, 80)}...
               </p>
 
-              <p className="text-xs text-gray-400 mt-3">
-                By {post.username}
-              </p>
+              <p className="text-xs text-gray-400 mt-3">By {post.username}</p>
             </div>
           </div>
         ))}

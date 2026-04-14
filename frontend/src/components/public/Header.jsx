@@ -1,14 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import path from "path";
 
 const linkStyle =
   "text-gray-700 hover:bg-gradient-to-r py-6 hover:from-pink-500 hover:to-orange-400 hover:bg-clip-text hover:text-transparent transition duration-300";
 const Header = () => {
   return (
-    <div className="bg-white shadow-md sticky inset-0 z-50">
+    <div className="bg-[rgba(255,255,255,0.95)] shadow-md sticky inset-0 z-50">
       <div className="max-w-[1200px] mx-auto flex justify-between items-center  w-[100%]">
         <div className="w-[120px]">
-          <img src="../../assets/logo.png" alt="logo" />
+          <img src="../../../src/assets/logo.png" alt="logo" />
         </div>
 
         <nav className="flex gap-5 ml-10 text-[18px] ">
