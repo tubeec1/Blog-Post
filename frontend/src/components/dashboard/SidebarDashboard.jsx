@@ -38,12 +38,12 @@ const SidebarDashboard = () => {
           src="../../../src/assets/logo.png"
           alt=""
         />
-        <h2 className="font-bold text-xl">Blogosphere</h2>
+        <h2 className="font-bold text-xl text-pink-500">Blogosphere</h2>
       </div>
       <div className="flex flex-col gap-y-4">
         {links.map((link, index) => (
           <Link
-            className="bg-white w-[90%] md:w-[100%] mx-auto flex flex-row items-center gap-x-3 shadow-md px-2 py-3 rounded hover:bg-pink-500 hover:text-white hover:-translate-y-1 transition duration-300"
+            className="bg-white w-[90%] text-gray-600 md:w-[100%] mx-auto flex flex-row items-center gap-x-3 shadow-md px-2 py-3 rounded hover:bg-pink-500 hover:text-white hover:-translate-y-1 transition duration-300"
             to={link.path}
           >
             {link.icon}

@@ -6,7 +6,7 @@ import { FaBell } from "react-icons/fa";
 const Header = () => {
   return (
     <div className="flex gap-5 flex-col-reverse md:flex-row justify-between mb-7  md:[100%]">
-      <div className="flex items-center gap-x-1 bg-white px-4 rounded-full shadow-md w-[80%] md:w-[30%] h-[45px]">
+      <div className="flex items-center gap-x-1 bg-white px-4 rounded-full shadow-md w-[80%] md:w-[30%] h-[45px] hover:-translate-y-1 transition duration-300">
         <IoIosSearch />
         <input
           type="text"
@@ -28,7 +28,7 @@ const Header = () => {
             alt=""
           />
           <div>
-            <h2 className="font-semibold">Hassan Abdi</h2>
+            <h2 className="font-semibold text-orange-500">Hassan Abdi</h2>
             <p className="text-gray-400">hassan@gmail.com</p>
           </div>
         </div>
