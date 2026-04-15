@@ -11,6 +11,9 @@ import BlogDetails from "../pages/publicLayout/BlogDetails";
 import ForgetPassword from "../pages/publicLayout/ForgetPassword";
 import React from "react";
 import ResetPassword from "../pages/publicLayout/ResetPassword";
+import Dashboard from "../pages/dashboardLayout/Dashboard";
+import Posts from "../pages/dashboardLayout/Posts";
+import Categories from "../pages/dashboardLayout/Categories";
 
 let route = createBrowserRouter([
   {
@@ -58,6 +61,20 @@ let route = createBrowserRouter([
   {
     path: "/dashboard",
     element: <DashboardLayout />,
+    children: [
+      {
+        index: true,
+        element: <Dashboard />,
+      },
+      {
+        path: "/dashboard/posts",
+        element: <Posts />,
+      },
+      {
+        path: "/dashboard/categories",
+        element: <Categories />,
+      },
+    ],
   },
 ]);
 
