@@ -1,56 +1,114 @@
-import React from "react";
-import { Link } from "react-router-dom";
-let inputs = [
-  {
-    label: "Email",
-    placeholder: "Enter your email",
-    type: "email",
-  },
-  {
-    label: "Password",
-    placeholder: "Enter your password",
-    type: "password",
-  },
-];
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { setUsers } from "../../features/auth/authSlice";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+
 const Login = () => {
+  const [user, setUser] = useState({
+    email: "",
+    password: ""
+  });
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+
+  const handleChange = (e) => {
+    setUser({
+      ...user,
+      [e.target.name]: e.target.value
+    });
+  };
+
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    try {
+      let res = await fetch("http://localhost:5000/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(user)
+      });
+
+      let data = await res.json();
+
+      if (data.status ===true) {
+      
+        dispatch(
+          setUsers({
+            user: data.user,
+            token: data.token
+          })
+        );
+
+     
+        localStorage.setItem("user", JSON.stringify(data.user));
+        localStorage.setItem("token", data.token);
+
+    
+        navigate("/" );
+      } else {
+        console.log(data.message);
+          
+
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
       <div className="w-full max-w-md bg-white border border-gray-200 rounded-2xl shadow-lg p-8 text-gray-800">
-        <h2 className="text-3xl font-bold text-center mb-6">Login </h2>
 
-        <form className="space-y-4">
-          {inputs.map((input, index) => {
-            return (
-              <div>
-                <label className="text-sm">{input.label}</label>
-                <input
-                  type={input.type}
-                  placeholder={input.placeholder}
-                  className="w-full mt-1 p-3 rounded-xl bg-gray-50 border border-gray-300 outline-none"
-                />
-              </div>
-            );
-          })}
-          <Link
-            to="/forget-password"
-            className="text-pink-600 underline flex justify-end font-semibold"
-          >
-            Foget Password
-          </Link>
+        <h2 className="text-3xl font-bold text-center mb-6">
+          Login
+        </h2>
+
+        <form onSubmit={handleLogin} className="space-y-4">
+
+      
+          <div>
+            <label className="text-sm">Email</label>
+            <input
+              type="email"
+              name="email"
+              value={user.email}
+              onChange={handleChange}
+              placeholder="Enter your email"
+              className="w-full mt-1 p-3 rounded-xl bg-gray-50 border border-gray-300 outline-none"
+            />
+          </div>
+
+          
+          <div>
+            <label className="text-sm">Password</label>
+            <input
+              type="password"
+              name="password"
+              value={user.password}
+              onChange={handleChange}
+              placeholder="Enter your password"
+              className="w-full mt-1 p-3 rounded-xl bg-gray-50 border border-gray-300 outline-none"
+            />
+          </div>
+
+    
           <button
-            type="button"
+            type="submit"
             className="w-full bg-gray-800 text-white font-semibold py-3 rounded-xl hover:bg-gray-700 transition"
           >
-            Submit
+            Login
           </button>
-        </form>
 
-        <p className="text-center mt-6 text-sm text-gray-600">
-          Don't have an account?{" "}
-          <Link to="/signup" className="underline font-semibold cursor-pointer">
-            Sign Up
-          </Link>
-        </p>
+        </form>
+           <ToastContainer />
       </div>
     </div>
   );
