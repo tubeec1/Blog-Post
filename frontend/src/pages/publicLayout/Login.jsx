@@ -1,5 +1,17 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
+let inputs = [
+  {
+    label: "Email",
+    placeholder: "Enter your email",
+    type: "email",
+  },
+  {
+    label: "Password",
+    placeholder: "Enter your password",
+    type: "password",
+  },
+];
 const Login = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
@@ -7,24 +19,24 @@ const Login = () => {
         <h2 className="text-3xl font-bold text-center mb-6">Login </h2>
 
         <form className="space-y-4">
-          <div>
-            <label className="text-sm">Email</label>
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="w-full mt-1 p-3 rounded-xl bg-gray-50 border border-gray-300 outline-none"
-            />
-          </div>
-
-          <div>
-            <label className="text-sm">Password</label>
-            <input
-              type="password"
-              placeholder="Enter your password"
-              className="w-full mt-1 p-3 rounded-xl bg-gray-50 border border-gray-300 outline-none"
-            />
-          </div>
-
+          {inputs.map((input, index) => {
+            return (
+              <div>
+                <label className="text-sm">{input.label}</label>
+                <input
+                  type={input.type}
+                  placeholder={input.placeholder}
+                  className="w-full mt-1 p-3 rounded-xl bg-gray-50 border border-gray-300 outline-none"
+                />
+              </div>
+            );
+          })}
+          <Link
+            to="/forget-password"
+            className="text-pink-600 underline flex justify-end font-semibold"
+          >
+            Foget Password
+          </Link>
           <button
             type="button"
             className="w-full bg-gray-800 text-white font-semibold py-3 rounded-xl hover:bg-gray-700 transition"
@@ -35,9 +47,9 @@ const Login = () => {
 
         <p className="text-center mt-6 text-sm text-gray-600">
           Don't have an account?{" "}
-          <span className="underline font-semibold cursor-pointer">
+          <Link to="/signup" className="underline font-semibold cursor-pointer">
             Sign Up
-          </span>
+          </Link>
         </p>
       </div>
     </div>

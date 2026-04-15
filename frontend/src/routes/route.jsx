@@ -8,7 +8,9 @@ import Login from "../pages/publicLayout/Login";
 import Signup from "../pages/publicLayout/Signup";
 import DashboardLayout from "../layouts/DashboardLayout";
 import BlogDetails from "../pages/publicLayout/BlogDetails";
+import ForgetPassword from "../pages/publicLayout/ForgetPassword";
 import React from "react";
+import ResetPassword from "../pages/publicLayout/ResetPassword";
 
 let route = createBrowserRouter([
   {
@@ -42,6 +44,14 @@ let route = createBrowserRouter([
       {
         path: "signup",
         element: <Signup />,
+      },
+      {
+        path: "/forget-password",
+        element: <ForgetPassword />,
+      },
+      {
+        path: "/reset-password",
+        element: <ResetPassword />,
       },
     ],
   },
