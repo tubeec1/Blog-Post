@@ -7,7 +7,7 @@ let stats = [
 ];
 const AboutUs = () => {
   return (
-    <div className="flex flex-col items-center justify-center p-8 gap-10 md:max-w-[1200px] mx-auto">
+    <div className="flex flex-col items-center justify-center px-8 gap-10 md:max-w-[1200px] mx-auto py-[90px]">
       <div className="flex flex-col md:flex-row gap-10 mt-[50px]">
         <div>
           <h2 className="font-semibold text-3xl mb-4">
@@ -27,7 +27,7 @@ const AboutUs = () => {
               {stats.map((stat) => (
                 <div
                   key={stat.id}
-                  className="shadow-md bg-white px-6 py-10 rounded-xl text-center w-[100%] md:w-[30%]"
+                  className="shadow-md bg-white px-6 py-10 rounded-xl text-center w-[100%] md:w-[30%] hover:-translate-y-2 transition duration-300 hover:shadow-xl"
                 >
                   <h3 className="text-gray-400">{stat.label}</h3>
                   <p className="font-bold text-xl bg-gradient-to-tr from-pink-500 to-orange-700 bg-clip-text text-transparent transition ">

@@ -25,7 +25,7 @@ let teams = [
 ];
 const Team = () => {
   return (
-    <div class=" bg-gray-200 w-[100%] ">
+    <div class=" bg-gray-200 w-[100%]  py-[90px]">
       <div class="  p-5 ">
         <div class="text-center mb-8">
           <h1 class="text-3xl font-bold tracking-wide">MEET OUR TEAM</h1>
@@ -36,20 +36,20 @@ const Team = () => {
 
         <div>
           {teams.map((member, index) =>
-            index & (2 == 0) ? (
-              <div class=" flex items-center flex-row-reverse rounded-xl p-5 mb-5 shadow-sm mx-20 bg-white">
+            index % 2 == 0 ? (
+              <div class=" flex items-center flex-row-reverse rounded-xl p-5 mb-5 shadow-sm mx-20 bg-white gap-7">
                 <img
                   class="w-20 h-20 rounded-full object-cover"
                   src="https://i.pravatar.cc/150?img=12"
                 />
-                <div class="ml-20">
+                <div class="ml-20 text-right">
                   <h3 class="font-semibold">{member.name}</h3>
                   <p class="text-sm text-gray-500">{member.role}</p>
                   <p class="text-sm text-gray-600 mt-2">{member.description}</p>
                 </div>
               </div>
             ) : (
-              <div class="flex items-center rounded-xl p-5 mb-5 shadow-sm mx-20">
+              <div class="flex items-center rounded-xl p-5 mb-5 bg-white shadow-sm mx-20 gap-7">
                 <img
                   class="w-20 h-20 rounded-full object-cover"
                   src="https://i.pravatar.cc/150?img=12"
