@@ -1,10 +1,11 @@
+
+
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setUsers } from "../../features/auth/authSlice";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 
 const Login = () => {
   const [user, setUser] = useState({
@@ -15,14 +16,12 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-
   const handleChange = (e) => {
     setUser({
       ...user,
       [e.target.name]: e.target.value
     });
   };
-
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -38,33 +37,33 @@ const Login = () => {
 
       let data = await res.json();
 
-      if (data.status ===true) {
-      
-        dispatch(
-          setUsers({
-            user: data.user,
-            token: data.token
-          })
-        );
+      if (data.status === true) {
+        toast.success("Login successful!");
 
-     
+        dispatch(setUsers({
+          user: data.user,
+          token: data.token
+        }));
+
         localStorage.setItem("user", JSON.stringify(data.user));
         localStorage.setItem("token", data.token);
 
-    
-        navigate("/" );
+        navigate("/");
       } else {
-        console.log(data.message);
-          
-
+        toast.error(data.message || "Login failed");
       }
+
     } catch (error) {
+      toast.error("Server error");
       console.log(error);
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
+
+      <ToastContainer position="top-center" />
+
       <div className="w-full max-w-md bg-white border border-gray-200 rounded-2xl shadow-lg p-8 text-gray-800">
 
         <h2 className="text-3xl font-bold text-center mb-6">
@@ -73,7 +72,6 @@ const Login = () => {
 
         <form onSubmit={handleLogin} className="space-y-4">
 
-      
           <div>
             <label className="text-sm">Email</label>
             <input
@@ -86,7 +84,6 @@ const Login = () => {
             />
           </div>
 
-          
           <div>
             <label className="text-sm">Password</label>
             <input
@@ -99,7 +96,6 @@ const Login = () => {
             />
           </div>
 
-    
           <button
             type="submit"
             className="w-full bg-gray-800 text-white font-semibold py-3 rounded-xl hover:bg-gray-700 transition"
@@ -108,7 +104,7 @@ const Login = () => {
           </button>
 
         </form>
-           <ToastContainer />
+
       </div>
     </div>
   );
