@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Signup = () => {
+  let navigate = useNavigate();
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -48,12 +49,15 @@ const Signup = () => {
 
       if (data.status === true) {
         toast.success("Signup successful!");
-        setUser({
-          name: "",
-          email: "",
-          password: "",
-          gender: "",
-        });
+        setTimeout(() => {
+          setUser({
+            name: "",
+            email: "",
+            password: "",
+            gender: "",
+          });
+          navigate("/login");
+        }, 3000);
       } else {
         toast.error(data.message || "Signup failed");
       }

@@ -8,7 +8,7 @@ let Signup = asyncHandler(async (req, res) => {
   let email = data.email;
   let gender = data.gender;
   let password = data.password;
-  let role = "admin";
+  let role = "user";
 
   let profileImage = null;
   if (gender == "male") {
@@ -19,13 +19,12 @@ let Signup = asyncHandler(async (req, res) => {
     throw new AppError("This gender not allowed", 400);
   }
   let response = await authservice.Signup(
-    
-   name, 
-   email,
+    name,
+    email,
     password,
-     role,
-      gender, 
-    profileImage
+    role,
+    gender,
+    profileImage,
   );
 
   return res.json(response);

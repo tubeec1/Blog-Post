@@ -3,7 +3,6 @@ let bcrypt = require("bcrypt");
 let jwtHandler = require("../utilits/jwt");
 let AppError = require("../utilits/AppError");
 let Signup = async (name, email, password, role, gender, profileImage) => {
-  
   let user = await authModel.findByEmail(email);
   if (user && user.length > 0) {
     throw new AppError("this email is already exist", 409);
@@ -11,12 +10,12 @@ let Signup = async (name, email, password, role, gender, profileImage) => {
 
   let hashPass = await bcrypt.hash(password, 10);
   let response = await authModel.Signup(
-   name,
+    name,
     email,
     hashPass,
-    role, 
-     gender,
-     profileImage
+    role,
+    gender,
+    profileImage,
   );
 
   return {
