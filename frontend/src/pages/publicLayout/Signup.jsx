@@ -1,5 +1,3 @@
-
-
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
@@ -9,7 +7,7 @@ const Signup = () => {
     name: "",
     email: "",
     password: "",
-    gender: ""
+    gender: "",
   });
 
   const dispatch = useDispatch();
@@ -25,9 +23,9 @@ const Signup = () => {
       let res = await fetch("http://localhost:5000/api/auth/signup", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(user)
+        body: JSON.stringify(user),
       });
 
       let data = await res.json();
@@ -45,13 +43,11 @@ const Signup = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
       <div className="w-full max-w-md bg-white border border-gray-200 rounded-2xl shadow-lg p-8">
-
         <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">
           Sign Up
         </h2>
 
         <form onSubmit={handle} className="space-y-4">
-
           <input
             name="name"
             placeholder="Name"
@@ -94,7 +90,6 @@ const Signup = () => {
           >
             Sign Up
           </button>
-
         </form>
 
         <p className="text-center mt-6 text-sm text-gray-600">
@@ -103,7 +98,6 @@ const Signup = () => {
             Login
           </Link>
         </p>
-
       </div>
     </div>
   );
