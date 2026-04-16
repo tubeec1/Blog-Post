@@ -6,6 +6,7 @@ const categoryRouter = require("./routes/categoryRouter");
 let globalErrorMiddleware = require("./middleWare/GlobalErrorMiddleWare");
 let app = express();
 app.use("/public", express.static("public/"));
+
 app.use(express.json());
 app.use(cors({
   origin: "http://localhost:5173",
