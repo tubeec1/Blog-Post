@@ -1,17 +1,19 @@
 let con = require("../config/conn");
-let Signup = async (name, email,  password, role, gender,  profileImge) => {
+let Signup = async (name, email,  password, role, gender,  profileImage) => {
+ 
   const [result] = await con.execute(
     "insert into users (name , email,  password , role , gender, profile_image)values(?,?,?,?,?,?)",
-    [name, email, password,   role,gender, profileImge],
+    [name, email, password,   role,gender, profileImage],
   );
-
+  
   const [rows] = await con.execute("SELECT *from users where id =?", [
    
     result.insertId,
   ]);
-
-  return rows[0];
   
+  return rows[0];
+
+ 
 };
 
 let findByEmail = async (email) => {

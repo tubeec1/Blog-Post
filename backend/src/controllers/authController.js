@@ -1,20 +1,20 @@
 let authservice = require("../service/authService");
 const AppError = require("../utilits/AppError");
 let asyncHandler = require("../utilits/AsynHandler");
+
 let Signup = asyncHandler(async (req, res) => {
   let data = req.body;
   let name = data.name;
   let email = data.email;
-    let gender = data.gender;
+  let gender = data.gender;
   let password = data.password;
-
   let role = "admin";
-console.log("gender" ,gender)
-  let profileIamge = null;
+
+  let profileImage = null;
   if (gender == "male") {
-    profileImge = `profileImages/manProfileImage.jpg`;
+    profileImage = `profileImages/manProfileImage.jpg`;
   } else if (gender == "female") {
-    profileImge = `profileImages/womanProfileImage.jpg`;
+    profileImage = `profileImages/womanProfileImage.jpg`;
   } else {
     throw new AppError("This gender not allowed", 400);
   }
@@ -25,7 +25,7 @@ console.log("gender" ,gender)
     password,
      role,
       gender, 
-      profileImge
+    profileImage
   );
 
   return res.json(response);

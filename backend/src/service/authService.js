@@ -2,7 +2,7 @@ const authModel = require("../model/authModel");
 let bcrypt = require("bcrypt");
 let jwtHandler = require("../utilits/jwt");
 let AppError = require("../utilits/AppError");
-let Signup = async (name, email, password, role, gender, profileImge) => {
+let Signup = async (name, email, password, role, gender, profileImage) => {
   
   let user = await authModel.findByEmail(email);
   if (user && user.length > 0) {
@@ -13,10 +13,10 @@ let Signup = async (name, email, password, role, gender, profileImge) => {
   let response = await authModel.Signup(
    name,
     email,
-     hashPass,
-      role, 
-      gender,
-       profileImge
+    hashPass,
+    role, 
+     gender,
+     profileImage
   );
 
   return {

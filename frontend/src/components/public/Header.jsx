@@ -70,7 +70,7 @@ const dispatch = useDispatch();
         </p>
          <button
             onClick={handleLogout}
-            className="mt-4 w-full bg-red-500 hover:bg-red-600 text-white py-2 rounded"
+            className="mt-4 w-full bg-pink-500 hover:bg-pink-600 text-white py-2 rounded"
           >
             Logout
           </button>

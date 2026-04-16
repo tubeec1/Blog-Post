@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Signup = () => {
   const [user, setUser] = useState({
@@ -10,13 +11,14 @@ const Signup = () => {
     gender: "",
   });
 
-  const dispatch = useDispatch();
-
   const handleChange = (e) => {
-    setUser({ ...user, [e.target.name]: e.target.value });
+    setUser({
+      ...user,
+      [e.target.name]: e.target.value,
+    });
   };
 
-  const handle = async (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
 
     try {
@@ -30,18 +32,27 @@ const Signup = () => {
 
       let data = await res.json();
 
-      if (data.status) {
-        console.log("success");
+      if (data.status === true) {
+        toast.success("Signup successful!");
+        setUser({
+          name: "",
+          email: "",
+          password: "",
+          gender: "",
+        });
       } else {
-        console.log(data.message);
+        toast.error(data.message || "Signup failed");
       }
     } catch (error) {
+      toast.error("Server error");
       console.log(error);
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
+      <ToastContainer />
+
       <div className="w-full max-w-md bg-white border border-gray-200 rounded-2xl shadow-lg p-8">
         <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">
           Sign Up
@@ -53,7 +64,7 @@ const Signup = () => {
             placeholder="Name"
             value={user.name}
             onChange={handleChange}
-            className="w-full p-3 border rounded-xl"
+            className="w-full p-3 border rounded-xl outline-none"
           />
 
           <input
@@ -61,7 +72,7 @@ const Signup = () => {
             placeholder="Email"
             value={user.email}
             onChange={handleChange}
-            className="w-full p-3 border rounded-xl"
+            className="w-full p-3 border rounded-xl outline-none"
           />
 
           <input
@@ -70,14 +81,14 @@ const Signup = () => {
             placeholder="Password"
             value={user.password}
             onChange={handleChange}
-            className="w-full p-3 border rounded-xl"
+            className="w-full p-3 border rounded-xl outline-none"
           />
 
           <select
             name="gender"
             value={user.gender}
             onChange={handleChange}
-            className="w-full p-3 border rounded-xl"
+            className="w-full p-3 border rounded-xl outline-none"
           >
             <option value="">Select Gender</option>
             <option value="male">Male</option>
@@ -86,7 +97,7 @@ const Signup = () => {
 
           <button
             type="submit"
-            className="w-full bg-gray-800 text-white py-3 rounded-xl"
+            className="w-full bg-gray-800 text-white py-3 rounded-xl hover:bg-gray-700 transition"
           >
             Sign Up
           </button>
