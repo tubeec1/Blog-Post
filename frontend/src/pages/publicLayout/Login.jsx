@@ -1,5 +1,3 @@
-
-
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -10,7 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 const Login = () => {
   const [user, setUser] = useState({
     email: "",
-    password: ""
+    password: "",
   });
 
   const dispatch = useDispatch();
@@ -19,7 +17,7 @@ const Login = () => {
   const handleChange = (e) => {
     setUser({
       ...user,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -30,9 +28,9 @@ const Login = () => {
       let res = await fetch("http://localhost:5000/api/auth/login", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(user)
+        body: JSON.stringify(user),
       });
 
       let data = await res.json();
@@ -40,10 +38,12 @@ const Login = () => {
       if (data.status === true) {
         toast.success("Login successful!");
 
-        dispatch(setUsers({
-          user: data.user,
-          token: data.token
-        }));
+        dispatch(
+          setUsers({
+            user: data.user,
+            token: data.token,
+          }),
+        );
 
         localStorage.setItem("user", JSON.stringify(data.user));
         localStorage.setItem("token", data.token);
@@ -52,7 +52,6 @@ const Login = () => {
       } else {
         toast.error(data.message || "Login failed");
       }
-
     } catch (error) {
       toast.error("Server error");
       console.log(error);
@@ -61,17 +60,12 @@ const Login = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
-
       <ToastContainer position="top-center" />
 
       <div className="w-full max-w-md bg-white border border-gray-200 rounded-2xl shadow-lg p-8 text-gray-800">
-
-        <h2 className="text-3xl font-bold text-center mb-6">
-          Login
-        </h2>
+        <h2 className="text-3xl font-bold text-center mb-6">Login</h2>
 
         <form onSubmit={handleLogin} className="space-y-4">
-
           <div>
             <label className="text-sm">Email</label>
             <input
@@ -102,9 +96,7 @@ const Login = () => {
           >
             Login
           </button>
-
         </form>
-
       </div>
     </div>
   );

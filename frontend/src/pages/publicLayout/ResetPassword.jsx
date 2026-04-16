@@ -31,7 +31,7 @@ const ResetPassword = () => {
             <div>
               <label className="text-sm text-gray-700">{input.label}</label>
               <input
-                type="text"
+                type={input.type}
                 placeholder={input.placeholder}
                 className="w-full mt-1 p-3 rounded-xl bg-gray-50 border border-gray-300 outline-none"
               />

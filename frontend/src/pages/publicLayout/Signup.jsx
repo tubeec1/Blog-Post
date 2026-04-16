@@ -12,15 +12,29 @@ const Signup = () => {
   });
 
   const handleChange = (e) => {
-    setUser({
-      ...user,
-      [e.target.name]: e.target.value,
+    setUser((prev) => {
+      return {
+        ...prev,
+        [e.target.name]: e.target.value,
+      };
     });
   };
 
   const handleSignup = async (e) => {
     e.preventDefault();
-
+    if (!user.name) {
+      toast("Enter your name");
+      return;
+    } else if (!user.email) {
+      toast("Enter your email");
+      return;
+    } else if (!user.password) {
+      toast("Enter your password");
+      return;
+    } else if (!user.gender) {
+      toast("Choose your gender! either male or female");
+      return;
+    }
     try {
       let res = await fetch("http://localhost:5000/api/auth/signup", {
         method: "POST",
@@ -51,14 +65,14 @@ const Signup = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
-      <ToastContainer />
+      <ToastContainer position="top-center" />
 
       <div className="w-full max-w-md bg-white border border-gray-200 rounded-2xl shadow-lg p-8">
         <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">
           Sign Up
         </h2>
 
-        <form onSubmit={handle} className="space-y-4">
+        <form onSubmit={handleSignup} className="space-y-4">
           <input
             name="name"
             placeholder="Name"
@@ -90,7 +104,9 @@ const Signup = () => {
             onChange={handleChange}
             className="w-full p-3 border rounded-xl outline-none"
           >
-            <option value="">Select Gender</option>
+            <option value="" disabled>
+              Select Gender
+            </option>
             <option value="male">Male</option>
             <option value="female">Female</option>
           </select>
