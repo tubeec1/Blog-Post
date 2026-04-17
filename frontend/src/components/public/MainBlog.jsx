@@ -1,10 +1,50 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-import posts from "../../assets/data/posts.json";
 import { useNavigate } from "react-router-dom";
 
 const MainBlog = () => {
+  let [posts, setPosts] = useState({
+    allPosts: [],
+    numberOfPages: [],
+    recentPosts: [],
+    page: 1,
+    limit: 6,
+  });
+
   let navigate = useNavigate();
+
+  let fetchAllPosts = async () => {
+    let res = await fetch("http://localhost:5000/api/posts/read?order=desc");
+    let data = await res.json();
+    if (data.status) {
+      setPosts((prev) => {
+        return { ...prev, allPosts: data.data };
+      });
+    }
+  };
+
+  let fetchRecentPosts = async (page) => {
+    let res = await fetch(
+      `http://localhost:5000/api/posts/read?page=${page}&limit=${posts.limit}&order=desc`,
+    );
+    let data = await res.json();
+    if (data.status) {
+      setPosts((prev) => {
+        return { ...prev, recentPosts: data.data };
+      });
+    }
+  };
+
+  let num = Math.ceil(posts.allPosts.length / 6);
+  posts.numberOfPages = [];
+  for (let i = 1; i <= num; i++) {
+    posts.numberOfPages.push(i);
+  }
+
+  useEffect(() => {
+    fetchAllPosts();
+    fetchRecentPosts(posts.page);
+  }, []);
   return (
     <div className="w-[80%] p-4">
       <div className="flex flex-col md:flex-row justify-between gap-5">
@@ -24,37 +64,47 @@ const MainBlog = () => {
         </form>
       </div>
       <section className="py-10 px-6 max-w-[1200px] mx-auto relative">
-        <button className="bg-white shadow-md w-10 h-10 rounded-full flex items-center justify-center   absolute  top-60  -left-20 hover:bg-gray-100 transition">
-          &lt;
-        </button>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {posts.map((post) => (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {posts.recentPosts.map((post) => (
             <div
-              key={post.id}
+              key={post.PostId}
               className="bg-white shadow-md rounded-xl overflow-hidden hover:shadow-xl transition duration-300 hover:-translate-y-2 cursor-pointer"
-              onClick={() => navigate(`/blogDetails/${post.id}`)}
+              onClick={() => navigate(`/blogDetails/${post.PostId}`)}
             >
               <img
-                src={post.image}
+                src={post.postThumbnail}
                 alt=""
                 className="h-48 w-full object-cover"
               />
               <div className=" p-4">
                 <span className="text-sm text-pink-500 font-medium">
-                  {post.category}
+                  {post.categoryName}
                 </span>
 
-                <h3 className="text-lg font-bold mt-2">{post.title}</h3>
+                <h3 className="text-lg font-bold mt-2">{post.postTitle}</h3>
                 <p className="text-gray-600 text-sm mt-2">
-                  {post.content.substring(0, 80)}
+                  {post.postContent.substring(0, 80)}
                 </p>
               </div>
             </div>
           ))}
         </div>
-        <button className="bg-white shadow-md w-10 h-10 rounded-full flex items-center justify-center   absolute  top-60  -right-20 hover:bg-gray-100 transition">
-          &gt;
-        </button>
+        <div className="flex flex-row justify-center gap-2 mt-5">
+          {posts.numberOfPages.map((page, index) => {
+            return (
+              <button
+                key={index}
+                className="border-1 border-gray-400 px-3 py-2 hover:bg-pink-500 hover:text-white"
+                onClick={() => {
+                  let newP = index + 1;
+                  fetchRecentPosts(newP);
+                }}
+              >
+                {page}
+              </button>
+            );
+          })}
+        </div>
       </section>
     </div>
   );

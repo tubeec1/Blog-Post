@@ -28,7 +28,7 @@ const createPost = async (
 
 const getAllPosts = async (page, limit, order) => {
   if (!page && !limit) {
-    let response = await postModel.getAllPosts();
+    let response = await postModel.getAllPosts(order);
     return {
       status: true,
       message: "successfully Reading",
