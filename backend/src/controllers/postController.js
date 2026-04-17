@@ -31,11 +31,10 @@ const createPost = asyncHandler(async (req, res) => {
 });
 
 const getAllPosts = asyncHandler(async (req, res) => {
-  let page = parseInt(req.query.page) || 1;
-  let limit = parseInt(req.query.limit) || 3;
-  let offset = (page - 1) * limit;
-  let response = await postService.getAllPosts(page, limit, offset);
-
+  let page = parseInt(req.query.page) || null;
+  let limit = parseInt(req.query.limit) || null;
+  let order = req.query.order || "asc";
+  let response = await postService.getAllPosts(page, limit, order);
   return res.json(response);
 });
 

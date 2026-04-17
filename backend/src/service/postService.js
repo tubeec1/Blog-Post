@@ -26,14 +26,28 @@ const createPost = async (
   };
 };
 
-const getAllPosts = async (page, limit, offset) => {
-  let response = await postModel.getAllPosts(page, limit, offset);
-
-  return {
-    status: true,
-    message: "successfully Reading",
-    data: response,
-  };
+const getAllPosts = async (page, limit, order) => {
+  if (!page && !limit) {
+    let response = await postModel.getAllPosts();
+    return {
+      status: true,
+      message: "successfully Reading",
+      data: response,
+    };
+  } else if (page && limit) {
+    let offset = (page - 1) * limit;
+    let response = await postModel.getPostsByPageAndLimit(
+      page,
+      limit,
+      offset,
+      order,
+    );
+    return {
+      status: true,
+      message: "successfully Reading",
+      data: response,
+    };
+  }
 };
 
 const getPostById = async (id) => {

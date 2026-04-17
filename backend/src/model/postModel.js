@@ -20,8 +20,25 @@ const createPost = async (
 module.exports = { createPost };
 
 const getAllPosts = async () => {
-  const [rows] = await con.execute("SELECT * FROM posts ORDER BY id DESC");
-
+  const [rows] =
+    await con.execute(`select users.name as "userName", users.email as "userEmail", users.gender as "userGender", users.role "userEmail", users.profile_image as "userProfileImage", posts.id AS "PostId", posts.title as "postTitle", posts.slug as "postSlug", posts.content AS "postContent", posts.thumbnail as "postThumbnail", posts.image AS "postImage", posts.created_at as "postCreatedAt", categories.name as "categoryName", categories.slug as "categorySlug"
+    from posts
+    join users on posts.user_id = users.id
+    join categories on posts.category_id = categories.id`);
+  return rows;
+};
+let getPostsByPageAndLimit = async (page, limit, offset, order) => {
+  const [rows] = await con.execute(
+    `select users.name as "userName", users.email as "userEmail", users.gender as "userGender", users.role "userEmail", users.profile_image as "userProfileImage", posts.id AS "PostId", posts.title as "postTitle", posts.slug as "postSlug", posts.content AS "postContent", posts.thumbnail as "postThumbnail", posts.image AS "postImage", posts.created_at as "postCreatedAt", categories.name as "categoryName", categories.slug as "categorySlug"
+    from posts
+    join users on posts.user_id = users.id
+    join categories on posts.category_id = categories.id
+    order by posts.created_at ${order}
+    limit ? offset ? 
+    
+    `,
+    [limit, offset],
+  );
   return rows;
 };
 
@@ -63,4 +80,5 @@ module.exports = {
   getPostById,
   updatePost,
   deletePost,
+  getPostsByPageAndLimit,
 };

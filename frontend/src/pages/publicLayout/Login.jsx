@@ -5,6 +5,20 @@ import { setUsers } from "../../features/auth/authSlice";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+let inputs = [
+  {
+    label: "Email",
+    name: "email",
+    type: "email",
+    placeholder: "Enter your email",
+  },
+  {
+    label: "Password",
+    name: "password",
+    type: "password",
+    placeholder: "Enter your password",
+  },
+];
 const Login = () => {
   const [user, setUser] = useState({
     email: "",
@@ -24,6 +38,13 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
 
+    if (!user.email) {
+      toast("Enter your email");
+      return;
+    } else if (!user.password) {
+      toast("Enter your password");
+      return;
+    }
     try {
       let res = await fetch("http://localhost:5000/api/auth/login", {
         method: "POST",
@@ -66,29 +87,19 @@ const Login = () => {
         <h2 className="text-3xl font-bold text-center mb-6">Login</h2>
 
         <form onSubmit={handleLogin} className="space-y-4">
-          <div>
-            <label className="text-sm">Email</label>
-            <input
-              type="email"
-              name="email"
-              value={user.email}
-              onChange={handleChange}
-              placeholder="Enter your email"
-              className="w-full mt-1 p-3 rounded-xl bg-gray-50 border border-gray-300 outline-none"
-            />
-          </div>
-
-          <div>
-            <label className="text-sm">Password</label>
-            <input
-              type="password"
-              name="password"
-              value={user.password}
-              onChange={handleChange}
-              placeholder="Enter your password"
-              className="w-full mt-1 p-3 rounded-xl bg-gray-50 border border-gray-300 outline-none"
-            />
-          </div>
+          {inputs.map((input, index) => (
+            <div>
+              <label className="text-sm">{input.label}</label>
+              <input
+                type={input.type}
+                name={input.name}
+                value={user[input.name]}
+                onChange={handleChange}
+                placeholder={input.placeholder}
+                className="w-full mt-1 p-3 rounded-xl bg-gray-50 border border-gray-300 outline-none"
+              />
+            </div>
+          ))}
 
           <button
             type="submit"

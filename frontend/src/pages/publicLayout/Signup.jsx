@@ -3,12 +3,45 @@ import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+let inputs = [
+  {
+    label: "Name",
+    name: "name",
+    type: "text",
+    placeholder: "Enter your name",
+  },
+  {
+    label: "Email",
+    name: "email",
+    type: "email",
+    placeholder: "Enter your email",
+  },
+  {
+    label: "Password",
+    name: "password",
+    type: "password",
+    placeholder: "Enter your password",
+  },
+  {
+    label: "Confirm Password",
+    name: "confirmPassword",
+    type: "password",
+    placeholder: "Enter your confirm password",
+  },
+  {
+    label: "gender",
+    name: "gender",
+    options: ["male", "female"],
+  },
+];
+
 const Signup = () => {
   let navigate = useNavigate();
   const [user, setUser] = useState({
     name: "",
     email: "",
     password: "",
+    confirmPassword: "",
     gender: "",
   });
 
@@ -31,6 +64,12 @@ const Signup = () => {
       return;
     } else if (!user.password) {
       toast("Enter your password");
+      return;
+    } else if (!user.confirmPassword) {
+      toast("Enter confirm password");
+      return;
+    } else if (user.password != user.confirmPassword) {
+      toast("There is mismatch password and confirm password");
       return;
     } else if (!user.gender) {
       toast("Choose your gender! either male or female");
@@ -77,43 +116,38 @@ const Signup = () => {
         </h2>
 
         <form onSubmit={handleSignup} className="space-y-4">
-          <input
-            name="name"
-            placeholder="Name"
-            value={user.name}
-            onChange={handleChange}
-            className="w-full p-3 border rounded-xl outline-none"
-          />
-
-          <input
-            name="email"
-            placeholder="Email"
-            value={user.email}
-            onChange={handleChange}
-            className="w-full p-3 border rounded-xl outline-none"
-          />
-
-          <input
-            name="password"
-            type="password"
-            placeholder="Password"
-            value={user.password}
-            onChange={handleChange}
-            className="w-full p-3 border rounded-xl outline-none"
-          />
-
-          <select
-            name="gender"
-            value={user.gender}
-            onChange={handleChange}
-            className="w-full p-3 border rounded-xl outline-none"
-          >
-            <option value="" disabled>
-              Select Gender
-            </option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-          </select>
+          {inputs.map((input, index) =>
+            input.options ? (
+              <div key={index}>
+                <label className="text-sm">{input.label}</label>
+                <select
+                  onChange={handleChange}
+                  className="w-full mt-1 p-3 rounded-xl bg-gray-50 border border-gray-300 outline-none"
+                  name={input.name}
+                  value={user[input.name]}
+                >
+                  <option disabled>Choose Gender:</option>
+                  {input.options.map((option, index) => (
+                    <option key={index} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            ) : (
+              <div>
+                <label className="text-sm">{input.label}</label>
+                <input
+                  type={input.type}
+                  name={input.name}
+                  value={user[input.name]}
+                  onChange={handleChange}
+                  placeholder={input.placeholder}
+                  className="w-full mt-1 p-3 rounded-xl bg-gray-50 border border-gray-300 outline-none"
+                />
+              </div>
+            ),
+          )}
 
           <button
             type="submit"
