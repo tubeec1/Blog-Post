@@ -5,6 +5,10 @@ let postRouter = require("./routes/postRouter");
 const categoryRouter = require("./routes/categoryRouter");
 let globalErrorMiddleware = require("./middleWare/GlobalErrorMiddleWare");
 let app = express();
+<<<<<<< HEAD
+=======
+app.use("/public", express.static("public/"));
+>>>>>>> a5a3cf699e48c2c9333f5b550bfec987a233e5ff
 
 app.use(express.json());
 app.use(
