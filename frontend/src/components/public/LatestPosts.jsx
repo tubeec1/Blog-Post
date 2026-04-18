@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { readPosts } from "../../features/auth/postSlice";
+
 
 const LatestPosts = () => {
   let [latestPosts, setLatestPosts] = useState([]);
