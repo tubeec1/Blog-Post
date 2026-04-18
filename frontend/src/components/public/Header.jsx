@@ -59,6 +59,14 @@ const Header = () => {
                     <p className="text-sm text-gray-600 mt-2">
                       Email: {user.email}
                     </p>
+                    {user.role == "admin" && (
+                      <Link
+                        className="text-sm text-gray-600 my-2 hover:text-pink-500"
+                        to="/dashboard"
+                      >
+                        Dashboard
+                      </Link>
+                    )}
                     <button
                       onClick={handleLogout}
                       className="mt-4 w-full bg-pink-500 hover:bg-pink-600 text-white py-2 rounded"
