@@ -42,6 +42,7 @@ let inputs = [
 const Posts = () => {
   const [dashPosts, setDashPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -65,13 +66,14 @@ const Posts = () => {
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-2xl font-bold text-pink-500">Posts Dashboard</h1>
 
-        <button className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-md shadow">
-          Create Post
+        <button className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-md shadow" 
+            onClick={() => setShowForm(true)}  > 
+                   Create Post
         </button>
       </div>
 
-      <div className="overflow-x-auto">
-        <table className="min-w-full bg-white border border-gray-200 shadow-md rounded-lg">
+      <div className="overflow-x-auto flex h-screen">
+        <table className="min-w-full bg-white border border-gray-200 shadow-md rounded-lg ">
           <thead className="bg-gray-100 text-gray-700">
             <tr>
               <th className="py-3 px-4 border">Post ID</th>
@@ -158,14 +160,17 @@ const Posts = () => {
         </table>
       </div>
 
-      {false && (
+      {showForm && (
         <div className="fixed inset-0 bg-[rgba(0,0,0,0.7)]">
           <div className="w-[50%] h-fit bg-white text-black mx-auto mt-20 py-10 px-10 rounded">
             <div className="flex justify-between py-2 mb-5">
               <h1 className="text-3xl font-bold text-center">
                 Post Registration
               </h1>
-              <button className="text-3xl cursor-pointer hover:text-pink-500">
+              <button
+              
+               className="text-3xl cursor-pointer hover:text-pink-500"   
+               onClick={() => setShowForm(false)}>
                 X
               </button>
             </div>

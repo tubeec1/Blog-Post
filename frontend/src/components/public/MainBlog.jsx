@@ -46,7 +46,7 @@ const MainBlog = () => {
     fetchRecentPosts(posts.page);
   }, []);
   return (
-    <div className="w-[80%] p-4">
+    <div className="w-[80%] p-4 ">
       <div className="flex flex-col md:flex-row justify-between gap-5">
         <h1 className="text-3xl font-semibold">Our Blogs </h1>
         <form className="flex flex-row gap-5">

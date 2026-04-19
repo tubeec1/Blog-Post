@@ -6,7 +6,7 @@ import { logout } from "../../features/auth/authSlice";
 const linkStyle =
   "text-gray-700 hover:bg-gradient-to-r py-6 hover:from-pink-500 hover:to-orange-400 hover:bg-clip-text hover:text-transparent transition duration-300";
 const Header = () => {
-  const { user } = useSelector((state) => state.auth);
+  const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
   const [showCard, setShowCard] = useState(false);
   const handleLogout = () => {

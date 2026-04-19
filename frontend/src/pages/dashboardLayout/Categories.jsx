@@ -16,7 +16,7 @@ let inputs = [
 ];
 const Categories = () => {
   const [categories, setCategories] = useState([]);
-
+ const [showForm, setShowForm] = useState(false);
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -39,12 +39,14 @@ const Categories = () => {
           Categories Dashboard
         </h1>
 
-        <button className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-md shadow">
+        <button className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-md shadow"
+         onClick={()=>setShowForm(true)}>
+       
           Create Category
         </button>
       </div>
 
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto flex h-screen">
         <table className="min-w-full bg-white border border-gray-200 shadow-md rounded-lg">
           <thead className="bg-gray-100 text-gray-700">
             <tr>
@@ -89,14 +91,15 @@ const Categories = () => {
           </tbody>
         </table>
       </div>
-      {false && (
+      {showForm && (
         <div className="fixed inset-0 bg-[rgba(0,0,0,0.7)]">
           <div className="w-[50%] h-fit bg-white text-black mx-auto mt-30 py-10 px-10 rounded">
             <div className="flex justify-between py-2 mb-5">
               <h1 className="text-3xl font-bold text-center">
                 Category Registration
               </h1>
-              <button className="text-3xl cursor-pointer hover:text-pink-500">
+              <button className="text-3xl cursor-pointer hover:text-pink-500"
+                onClick={()=>setShowForm(false)}>
                 X
               </button>
             </div>
