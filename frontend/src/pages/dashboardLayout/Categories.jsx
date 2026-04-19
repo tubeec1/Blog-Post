@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 
 let inputs = [
@@ -26,7 +25,6 @@ const Categories = () => {
     slug: "",
   });
 
-  
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -59,7 +57,6 @@ const Categories = () => {
     });
   };
 
- 
   const handleUpdate = async (e) => {
     e.preventDefault();
 
@@ -71,7 +68,7 @@ const Categories = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
-      }
+      },
     );
 
     const data = await res.json();
@@ -82,14 +79,12 @@ const Categories = () => {
       setShowForm(false);
       setSelectedCategory(null);
 
-    console.log(formData);
-     console.log(selectedCategory);
+      console.log(formData);
+      console.log(selectedCategory);
       setCategories((prev) =>
         prev.map((item) =>
-          item.id === selectedCategory.id
-            ? { ...item, ...formData }
-            : item
-        )
+          item.id === selectedCategory.id ? { ...item, ...formData } : item,
+        ),
       );
     } else {
       alert("Update failed");
@@ -98,8 +93,6 @@ const Categories = () => {
 
   return (
     <div className="p-6">
-
-    
       <div className="flex justify-between mb-4">
         <h1 className="text-2xl font-bold text-pink-500">
           Categories Dashboard
@@ -112,69 +105,58 @@ const Categories = () => {
           Create Category
         </button>
       </div>
-
-      
-      <table className="min-w-full bg-white border">
-        <thead className="bg-gray-100">
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Slug</th>
-            <th>User ID</th>
-            <th>Created At</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {categories.map((cat) => (
-            <tr key={cat.id} className="text-center border-t">
-
-              <td>{cat.id}</td>
-              <td>{cat.name}</td>
-              <td>{cat.slug}</td>
-              <td>{cat.user_id}</td>
-              <td>{new Date(cat.created_at).toLocaleString()}</td>
-
-              <td className="space-x-2">
-
-                <button
-                  onClick={() => handleEdit(cat)}
-                  className="bg-gray-500 text-white px-3 py-1 rounded"
-                >
-                  Edit
-                </button>
-
-                <button className="bg-pink-500 text-white px-3 py-1 rounded">
-                  Delete
-                </button>
-
-              </td>
+      <div className="overflow-x-auto overflow-y-auto max-h-[72vh] ">
+        <table className="min-w-full bg-white border">
+          <thead className="bg-gray-100">
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Slug</th>
+              <th>User ID</th>
+              <th>Created At</th>
+              <th>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+
+          <tbody>
+            {categories.map((cat) => (
+              <tr key={cat.id} className="text-center border-t p-6">
+                <td>{cat.id}</td>
+                <td>{cat.name}</td>
+                <td>{cat.slug}</td>
+                <td>{cat.user_id}</td>
+                <td>{new Date(cat.created_at).toLocaleString()}</td>
+
+                <td className="space-x-2">
+                  <button
+                    onClick={() => handleEdit(cat)}
+                    className="bg-gray-500 text-white px-3 py-1 rounded"
+                  >
+                    Edit
+                  </button>
+
+                  <button className="bg-pink-500 text-white px-3 py-1 rounded">
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
       {showForm && (
         <div className="fixed inset-0 bg-black/70 flex items-center justify-center">
-
           <div className="bg-white w-[50%] p-6 rounded">
-
             <div className="flex justify-between mb-4">
-              <h1 className="text-xl font-bold">
-                Edit Category
-              </h1>
+              <h1 className="text-xl font-bold">Edit Category</h1>
 
-              <button onClick={() => setShowForm(false)}>
-                X
-              </button>
+              <button onClick={() => setShowForm(false)}>X</button>
             </div>
 
             <form onSubmit={handleUpdate} className="space-y-4">
-
               {inputs.map((input, index) => (
                 <div key={index}>
-
                   <label>{input.label}</label>
 
                   <input
@@ -185,7 +167,6 @@ const Categories = () => {
                     placeholder={input.placeholder}
                     className="w-full border p-2"
                   />
-
                 </div>
               ))}
 
@@ -195,14 +176,10 @@ const Categories = () => {
               >
                 Update Category
               </button>
-
             </form>
-
           </div>
-
         </div>
       )}
-
     </div>
   );
 };
