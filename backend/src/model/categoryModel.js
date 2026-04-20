@@ -17,19 +17,19 @@ const CategoryModel = {
     return rows;
   },
 
-  update: async (id, name, slug) => {
+  update: async (categoryId, name, slug) => {
     const query = `
       UPDATE categories
       SET name = ?, slug = ?
       WHERE id = ?
     `;
-    const [result] = await con.execute(query, [name, slug, id]);
+    const [result] = await con.execute(query, [name, slug, categoryId]);
     return result;
   },
 
-  delete: async (id) => {
+  delete: async (categoryId) => {
     const query = `DELETE FROM categories WHERE id = ?`;
-    const [result] = await con.execute(query, [id]);
+    const [result] = await con.execute(query, [categoryId]);
     return result;
   },
 };

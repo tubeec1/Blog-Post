@@ -118,22 +118,28 @@ const Signup = () => {
         <form onSubmit={handleSignup} className="space-y-4">
           {inputs.map((input, index) =>
             input.options ? (
+            
               <div key={index}>
-                <label className="text-sm">{input.label}</label>
-                <select
-                  onChange={handleChange}
-                  className="w-full mt-1 p-3 rounded-xl bg-gray-50 border border-gray-300 outline-none"
-                  name={input.name}
-                  value={user[input.name]}
-                >
-                  <option disabled>Choose Gender:</option>
-                  {input.options.map((option, index) => (
-                    <option key={index} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
-              </div>
+              <label className="text-sm">{input.label}</label>
+                  
+              <select
+              name={input.name}
+                value={user[input.name] || ""}
+                       onChange={handleChange}
+                     className="w-full mt-1 p-3 rounded-xl bg-gray-50 border border-gray-300 outline-none"
+               >
+              <option value="" disabled>
+                Choose Gender
+                </option>
+
+              {input.options.map((option, index) => (
+              <option key={index} value={option}>
+               {option}
+      </option>
+    ))}
+  </select>
+</div>
+              
             ) : (
               <div>
                 <label className="text-sm">{input.label}</label>

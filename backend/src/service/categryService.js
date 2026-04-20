@@ -14,8 +14,8 @@ const CategoryService = {
     return await CategoryModel.findAll();
   },
 
-  updateCategory: async (id, name, slug) => {
-    let response = CategoryModel.update(id, name, slug);
+  updateCategory: async (categoryId, name, slug) => {
+    let response = CategoryModel.update(categoryId, name, slug);
 
     return {
       status: true,
@@ -23,8 +23,8 @@ const CategoryService = {
     };
   },
 
-  deleteCategory: async (id) => {
-    let response = await CategoryModel.delete(id);
+  deleteCategory: async (categoryId) => {
+    let response = await CategoryModel.delete(categoryId);
 
     return {
       status: true,

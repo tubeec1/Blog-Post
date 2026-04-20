@@ -25,17 +25,17 @@ const getAllCategories = asyncHandler(async (req, res) => {
   });
 });
 const updateCategory = asyncHandler(async (req, res) => {
-  const { id } = req.params;
+  const { categoryId} = req.params;
   const { name, slug } = req.body;
-  let response = await CategoryService.updateCategory(id, name, slug);
+  let response = await CategoryService.updateCategory(categoryId, name, slug);
 
   return res.json(response);
 });
 
 const deleteCategory = asyncHandler(async (req, res) => {
-  const { id } = req.params;
+  const {categoryId } = req.params;
 
-  let response = await CategoryService.deleteCategory(id);
+  let response = await CategoryService.deleteCategory(categoryId);
 
   return res.json(response);
 });
