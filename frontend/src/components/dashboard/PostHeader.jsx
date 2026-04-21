@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 
 let inputs = [
   {
@@ -32,133 +32,122 @@ let inputs = [
     type: "file",
     placeholder: "Enter a thumbnail",
   },
-  {
-    label: "Category",
-    name: "category",
-    type: "text",
-    placeholder: "Chose category",
-    options: ["Web development", "Health", "Food"],
-  },
-]
-  
+];
 
-const PostHeader = ({showForm ,setShowForm ,selectedPosts,setSeectedPosts}) => {
-  
-  let isEdit = !! selectedPosts;
+const PostHeader = ({
+  showForm,
+  setShowForm,
+  selectedPosts,
+  setSeectedPosts,
+  categories,
+}) => {
+  let isEdit = !!selectedPosts;
 
-  const [formData, setFormData] = useState({
-  category_id: "",
-  title: "",
-  slug: "",
-  content: "",
-  image: null,
-  thumbnail: null,
-});
-const handleChange = (e) => {
-  const { name, value, files, type } = e.target;
+  const [postData, setPostData] = useState({
+    category_id: "",
+    title: "",
+    slug: "",
+    content: "",
+    image: null,
+    thumbnail: null,
+  });
+  const handleChange = (e) => {
+    const { name, value, files, type } = e.target;
 
-  setFormData((prev) => ({
-    ...prev,
-    [name]: type === "file" ? files[0] : value,
-  }));
-};
+    setPostData((prev) => ({
+      ...prev,
+      [name]: type === "file" ? files[0] : value,
+    }));
+  };
 
+  const handleCreatePost = async (e) => {
+    e.preventDefault();
 
-// const handleSubmit = async (e) => {
-//   e.preventDefault();
+    const formData = new FormData();
 
-//   const form = new FormData(e.target);
+    formData.append("categoryId", Number(postData.category_id));
+    formData.append("title", postData.title);
+    formData.append("slug", postData.slug);
+    formData.append("content", postData.content);
+    formData.append("image", postData.image);
+    formData.append("thumbnail", postData.thumbnail);
 
-//   const category_id = form.get("category_id");
+    const token = localStorage.getItem("token");
 
-//   if (!category_id) {
-//     toast.error("Please select category");
-//     return;
-//   }
-
-//   const data = new FormData();
-
-//   data.append("category_id", Number(category_id));
-//   data.append("title", form.get("title"));
-//   data.append("slug", form.get("slug"));
-//   data.append("content", form.get("content"));
-//   data.append("image", form.get("image"));
-//   data.append("thumbnail", form.get("thumbnail"));
-
-//   const token = localStorage.getItem("token");
-
-//   const res = await fetch("http://localhost:5000/api/posts/create", {
-//     method: "POST",
-//     headers: {
-//       Authorization: `Bearer ${token}`,
-//     },
-//     body: data,
-//   });
-
-//   const result = await res.json();
-
-//   console.log("RESULT:", result);
-
-//   if (result.status) {
-//     toast.success("Post created successfully");
-//   } else {
-//     toast.error(result.message);
-//   }
-// };
- const handle = async (e) => {
-  e.preventDefault();
-
-  if (!selectedPosts?.id) {
-    toast.error("No post selected for update");
-    return;
-  }
-
-  if (!formData.category_id) {
-    toast.error("Please select category");
-    return;
-  }
-
-  const data = new FormData();
-
-  data.append("category_id", formData.category_id);
-  data.append("title", formData.title);
-  data.append("slug", formData.slug);
-  data.append("content", formData.content);
-
-  if (formData.image) {
-    data.append("image", formData.image);
-  }
-
-  if (formData.thumbnail) {
-    data.append("thumbnail", formData.thumbnail);
-  }
-
-  const token = localStorage.getItem("token");
-
-  const res = await fetch(
-    `http://localhost:5000/api/posts/update/${selectedPosts.id}`,
-    {
-      method: "PUT",
+    const res = await fetch("http://localhost:5000/api/posts/create", {
+      method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      body: data,
+      body: formData,
+    });
+
+    const result = await res.json();
+
+    console.log("RESULT:", result);
+
+    if (result.status) {
+      setShowForm(false);
+      toast.success(result.message);
+    } else {
+      toast.error(result.message);
     }
-  );
+  };
+  // const handle = async (e) => {
+  //   e.preventDefault();
 
-  const result = await res.json();
+  //   if (!selectedPosts?.id) {
+  //     toast.error("No post selected for update");
+  //     return;
+  //   }
 
-  if (result.status) {
-    toast.success("Post updated successfully");
+  //   if (!formData.category_id) {
+  //     toast.error("Please select category");
+  //     return;
+  //   }
 
-    setSeectedPosts(null);
-    setShowForm(false);
-  } else {
-    toast.error(result.message);
-  }
-};
+  //   const data = new FormData();
+
+  //   data.append("category_id", formData.category_id);
+  //   data.append("title", formData.title);
+  //   data.append("slug", formData.slug);
+  //   data.append("content", formData.content);
+
+  //   if (formData.image) {
+  //     data.append("image", formData.image);
+  //   }
+
+  //   if (formData.thumbnail) {
+  //     data.append("thumbnail", formData.thumbnail);
+  //   }
+
+  //   const token = localStorage.getItem("token");
+
+  //   const res = await fetch(
+  //     `http://localhost:5000/api/posts/update/${selectedPosts.id}`,
+  //     {
+  //       method: "PUT",
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //       body: data,
+  //     },
+  //   );
+
+  //   const result = await res.json();
+
+  //   if (result.status) {
+  //     toast.success("Post updated successfully");
+
+  //     setSeectedPosts(null);
+  //     setShowForm(false);
+  //   } else {
+  //     toast.error(result.message);
+  //   }
+  // };
   return (
     <div>
+      <ToastContainer position="top-center" />
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-2xl font-bold text-pink-500">Posts Dashboard</h1>
 
@@ -174,7 +163,7 @@ const handleChange = (e) => {
           <div className="w-[50%] h-fit bg-white text-black mx-auto mt-20 py-10 px-10 rounded">
             <div className="flex justify-between py-2 mb-5">
               <h1 className="text-3xl font-bold text-center">
-                {isEdit ? "  Posts Regestration" :"  Update Posts"}
+                {selectedPosts ? "  Post Updating" : "Post Creation"}
               </h1>
               <button
                 className="text-3xl cursor-pointer hover:text-pink-500"
@@ -183,60 +172,55 @@ const handleChange = (e) => {
                 X
               </button>
             </div>
-        
-              <form className="space-y-4" onSubmit={handle}>
+
+            <form className="space-y-4" onSubmit={handleCreatePost}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                {inputs.map((input, index) => (
+                  <div key={index}>
+                    <label className="text-sm">{input.label}</label>
+                    {console.log("selected posts,", selectedPosts)}
+                    <input
+                      type={input.type}
+                      name={input.name}
+                      value={
+                        selectedPosts
+                          ? selectedPosts[input.name]
+                          : postData[input.name]
+                      }
+                      onChange={handleChange}
+                      placeholder={input.placeholder}
+                      className="w-full mt-1 p-3 rounded-xl bg-gray-50 border border-gray-300 outline-none"
+                    />
+                  </div>
+                ))}
+                <div>
+                  <label className="text-sm">Category</label>
 
-    
-    <div>
-      <label className="text-sm">Category</label>
+                  <select
+                    name="category_id"
+                    value={postData.category_id}
+                    onChange={handleChange}
+                    className="w-full mt-1 p-3 rounded-xl bg-gray-50 border border-gray-300 outline-none"
+                  >
+                    <option value="">Select category</option>
 
-      <select
-        name="category_id"
-        value={formData.category_id}
-        onChange={handleChange}
-        className="w-full mt-1 p-3 rounded-xl bg-gray-50 border border-gray-300 outline-none"
-      >
-        <option value="">Select category</option>
+                    {categories.map((cat) => (
+                      <option key={cat.id} value={cat.id}>
+                        {cat.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
 
-        {categories.map((cat) => (
-          <option key={cat.id} value={cat.id}>
-            {cat.name}
-          </option>
-        ))}
-      </select>
-    </div>
-
-  
-    {inputs.map((input, index) => (
-      <div key={index}>
-        <label className="text-sm">{input.label}</label>
-
-        <input
-          type={input.type}
-          name={input.name}
-          value={
-            input.type === "file"
-              ? undefined
-              : formData[input.name]
-          }
-          onChange={handleChange}
-          placeholder={input.placeholder}
-          className="w-full mt-1 p-3 rounded-xl bg-gray-50 border border-gray-300 outline-none"
-        />
-      </div>
-    ))}
-  </div>
-
-
-  <button
-    type="submit"
-    className="w-full bg-gray-800 text-white py-3 rounded-xl hover:bg-gray-700 transition"
-  >
-    Update Post
-  </button>
-</form>
-         </div>
+              <button
+                type="submit"
+                className="w-full bg-gray-800 text-white py-3 rounded-xl hover:bg-gray-700 transition"
+              >
+                {selectedPosts ? "Update post" : "Create post"}
+              </button>
+            </form>
+          </div>
         </div>
       )}
     </div>
@@ -244,4 +228,3 @@ const handleChange = (e) => {
 };
 
 export default PostHeader;
-
