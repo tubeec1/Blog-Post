@@ -4,31 +4,31 @@ import { toast, ToastContainer } from "react-toastify";
 let inputs = [
   {
     label: "Title",
-    name: "title",
+    name: "postTitle",
     type: "text",
     placeholder: "Enter a post title",
   },
   {
     label: "Slug",
-    name: "slug",
+    name: "postSlug",
     type: "text",
     placeholder: "Enter a post slug",
   },
   {
     label: "Conent",
-    name: "content",
+    name: "postContent",
     type: "text",
     placeholder: "Enter a post content",
   },
   {
     label: "Thumbnail",
-    name: "thumbnail",
+    name: "postThumbnail",
     type: "file",
     placeholder: "Enter a thumbnail",
   },
   {
     label: "Image",
-    name: "image",
+    name: "postImage",
     type: "file",
     placeholder: "Enter a thumbnail",
   },
@@ -41,15 +41,13 @@ const PostHeader = ({
   setSeectedPosts,
   categories,
 }) => {
-  let isEdit = !!selectedPosts;
-
   const [postData, setPostData] = useState({
-    category_id: "",
-    title: "",
-    slug: "",
-    content: "",
-    image: null,
-    thumbnail: null,
+    postCategorId: "",
+    postTitle: "",
+    postSlug: "",
+    postContent: "",
+    postImage: null,
+    postThumbnail: null,
   });
   const handleChange = (e) => {
     const { name, value, files, type } = e.target;
@@ -65,12 +63,12 @@ const PostHeader = ({
 
     const formData = new FormData();
 
-    formData.append("categoryId", Number(postData.category_id));
-    formData.append("title", postData.title);
-    formData.append("slug", postData.slug);
-    formData.append("content", postData.content);
-    formData.append("image", postData.image);
-    formData.append("thumbnail", postData.thumbnail);
+    formData.append("categoryId", Number(postData.postCategoryId));
+    formData.append("title", postData.postTitle);
+    formData.append("slug", postData.postSlug);
+    formData.append("content", postData.postContent);
+    formData.append("image", postData.postImage);
+    formData.append("thumbnail", postData.postThumbnail);
 
     const token = localStorage.getItem("token");
 
@@ -153,7 +151,20 @@ const PostHeader = ({
 
         <button
           className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-md shadow"
-          onClick={() => setShowForm(true)}
+          onClick={() => {
+            setPostData((prev) => {
+              return {
+                ...prev,
+                postCategorId: "",
+                postTitle: "",
+                postSlug: "",
+                postContent: "",
+                postImage: null,
+                postThumbnail: null,
+              };
+            });
+            setShowForm(true);
+          }}
         >
           Create Post
         </button>
@@ -182,11 +193,11 @@ const PostHeader = ({
                     <input
                       type={input.type}
                       name={input.name}
-                      value={
-                        selectedPosts
-                          ? selectedPosts[input.name]
-                          : postData[input.name]
-                      }
+                      {...(input.type !== "file" && {
+                        value: selectedPosts
+                          ? selectedPosts[input.name] || ""
+                          : postData[input.name] || "",
+                      })}
                       onChange={handleChange}
                       placeholder={input.placeholder}
                       className="w-full mt-1 p-3 rounded-xl bg-gray-50 border border-gray-300 outline-none"
