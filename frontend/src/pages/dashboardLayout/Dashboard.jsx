@@ -1,4 +1,7 @@
 import React from "react";
+import { MdCategory } from "react-icons/md";
+import { FaFileAlt } from "react-icons/fa";
+import { FaUsers } from "react-icons/fa";
 import {
   BarChart,
   Bar,
@@ -36,22 +39,37 @@ const Dashboard = () => {
      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
       
      
-      <div className="bg-pink-500 text-white p-5 rounded-xl  shadow-md">
-        <h3 className="text-xl">Posts</h3>
-        <p className="text-2xl font-bold">{stats.posts}</p>
-      </div>
-
-    
-      <div className="bg-white text-black p-5 rounded-xl shadow-md">
-        <h3 className="text-xl">Categories</h3>
-        <p className="text-2xl font-bold">{stats.categories}</p>
-      </div>
-
      
-      <div className="bg-white text-black p-5 rounded-xl shadow-md">
-        <h3 className="text-xl">Users</h3>
-        <p className="text-2xl font-bold">{stats.users}</p>
+      <div className="bg-pink-500 text-white p-5 rounded-xl shadow-md flex justify-between items-center">
+  
+  <div>
+    <h3 className="text-xl">Posts</h3>
+    <p className="text-2xl font-bold">{stats.posts}</p>
+  </div>
+
+  <FaFileAlt className="text-4xl text-white/80" />
+
+</div>
+
+
+      <div className="bg-white text-black p-5 rounded-xl shadow-md flex justify-between items-center">
+  <div>
+    <h3 className="text-xl">Categories</h3>
+    <p className="text-2xl font-bold">{stats.categories}</p>
+  </div>
+
+  <MdCategory className="text-4xl text-pink-500" />
+</div>
+<div className="bg-white text-black p-5 rounded-xl shadow-md flex justify-between items-center">
+
+     <div>
+      <h3 className="text-xl">Users</h3>
+      <p className="text-2xl font-bold">{stats.users}</p>
       </div>
+
+      <FaUsers className="text-4xl text-pink-500" />
+
+     </div>
 
     </div>
     <div className="bg-white p-6 rounded-xl shadow-md mt-10">

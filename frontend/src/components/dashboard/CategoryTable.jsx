@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const CategoryTable = ({
   setShowForm,
   setSelectedCategory,
   fetchCategories,
   categories,
+  setCategories,
 }) => {
   useEffect(() => {
     fetchCategories();
@@ -20,7 +22,7 @@ const CategoryTable = ({
     const token = localStorage.getItem("token");
 
     if (!token) {
-      alert("No token found. Please login again.");
+      toast.error("No token found. Please login again.");
       return;
     }
 
@@ -37,14 +39,12 @@ const CategoryTable = ({
 
     const data = await res.json();
 
-    console.log("delete response:", data);
-    console.log("DELETE CLICKED:", categoryId);
     if (data.status) {
-      alert("Deleted successfully");
-
+      toast.success("Deleted successfully");
+       fetchCategories();
       setCategories((prev) => prev.filter((item) => item.id !== categoryId));
     } else {
-      alert(data.message || "Delete failed");
+      toast.error(data.message || "Delete failed");
     }
   };
   return (
@@ -76,6 +76,7 @@ const CategoryTable = ({
                     setSelectedCategory(cat);
                     setShowForm(true);
                   }}
+
                   className="bg-gray-500 text-white px-3 py-1 rounded"
                 >
                   Edit

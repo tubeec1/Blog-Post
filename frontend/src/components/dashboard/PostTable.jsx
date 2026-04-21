@@ -1,25 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React  from "react";
 
-const PostTable = () => {
-  const [dashPosts, setDashPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
+const PostTable = ({loading ,dashPosts , showForm , setShowForm ,setSeectedPosts,}) => {
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const res = await fetch("http://localhost:5000/api/posts/read");
-        const data = await res.json();
+  
 
-        setDashPosts(data?.data || []);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    };
 
-    fetchPosts();
-  }, []);
   return (
     <div className="overflow-x-auto overflow-y-auto flex max-h-[72vh]">
       <table className="min-w-full bg-white border border-gray-200 shadow-md rounded-lg ">
@@ -94,7 +79,12 @@ const PostTable = () => {
                 </td>
 
                 <td className="py-5 px-3 border space-x-2 flex">
-                  <button className="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm">
+                  <button className="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm"
+                     onClick={() => {
+                       setShowForm(true);
+                      setSeectedPosts(post);
+                
+                    }}>
                     Edit
                   </button>
 

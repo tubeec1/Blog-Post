@@ -24,7 +24,9 @@ const Categories = () => {
         showForm={showForm}
         setShowForm={setShowForm}
         selectedCategory={selectedCategory}
+        setSelectedCategory={selectedCategory}
         fetchCategories={fetchCategories}
+
       />
       <CategoryTable
         categories={categories}

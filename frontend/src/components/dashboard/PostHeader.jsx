@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 let inputs = [
   {
@@ -38,9 +39,124 @@ let inputs = [
     placeholder: "Chose category",
     options: ["Web development", "Health", "Food"],
   },
-];
-const PostHeader = () => {
-  let [showForm, setShowForm] = useState(false);
+]
+  
+
+const PostHeader = ({showForm ,setShowForm ,selectedPosts,setSeectedPosts}) => {
+  
+  let isEdit = !! selectedPosts;
+
+  const [formData, setFormData] = useState({
+  category_id: "",
+  title: "",
+  slug: "",
+  content: "",
+  image: null,
+  thumbnail: null,
+});
+const handleChange = (e) => {
+  const { name, value, files, type } = e.target;
+
+  setFormData((prev) => ({
+    ...prev,
+    [name]: type === "file" ? files[0] : value,
+  }));
+};
+
+
+// const handleSubmit = async (e) => {
+//   e.preventDefault();
+
+//   const form = new FormData(e.target);
+
+//   const category_id = form.get("category_id");
+
+//   if (!category_id) {
+//     toast.error("Please select category");
+//     return;
+//   }
+
+//   const data = new FormData();
+
+//   data.append("category_id", Number(category_id));
+//   data.append("title", form.get("title"));
+//   data.append("slug", form.get("slug"));
+//   data.append("content", form.get("content"));
+//   data.append("image", form.get("image"));
+//   data.append("thumbnail", form.get("thumbnail"));
+
+//   const token = localStorage.getItem("token");
+
+//   const res = await fetch("http://localhost:5000/api/posts/create", {
+//     method: "POST",
+//     headers: {
+//       Authorization: `Bearer ${token}`,
+//     },
+//     body: data,
+//   });
+
+//   const result = await res.json();
+
+//   console.log("RESULT:", result);
+
+//   if (result.status) {
+//     toast.success("Post created successfully");
+//   } else {
+//     toast.error(result.message);
+//   }
+// };
+ const handle = async (e) => {
+  e.preventDefault();
+
+  if (!selectedPosts?.id) {
+    toast.error("No post selected for update");
+    return;
+  }
+
+  if (!formData.category_id) {
+    toast.error("Please select category");
+    return;
+  }
+
+  const data = new FormData();
+
+  data.append("category_id", formData.category_id);
+  data.append("title", formData.title);
+  data.append("slug", formData.slug);
+  data.append("content", formData.content);
+
+  if (formData.image) {
+    data.append("image", formData.image);
+  }
+
+  if (formData.thumbnail) {
+    data.append("thumbnail", formData.thumbnail);
+  }
+
+  const token = localStorage.getItem("token");
+
+  const res = await fetch(
+    `http://localhost:5000/api/posts/update/${selectedPosts.id}`,
+    {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: data,
+    }
+  );
+
+  const result = await res.json();
+
+  if (result.status) {
+    toast.success("Post updated successfully");
+
+    setSeectedPosts(null);
+    setShowForm(false);
+  } else {
+    toast.error(result.message);
+  }
+};
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
@@ -58,7 +174,7 @@ const PostHeader = () => {
           <div className="w-[50%] h-fit bg-white text-black mx-auto mt-20 py-10 px-10 rounded">
             <div className="flex justify-between py-2 mb-5">
               <h1 className="text-3xl font-bold text-center">
-                Post Registration
+                {isEdit ? "  Posts Regestration" :"  Update Posts"}
               </h1>
               <button
                 className="text-3xl cursor-pointer hover:text-pink-500"
@@ -67,46 +183,60 @@ const PostHeader = () => {
                 X
               </button>
             </div>
-            <form className="space-y-4">
+        
+              <form className="space-y-4" onSubmit={handle}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                {inputs.map((input, index) =>
-                  input.options ? (
-                    <div key={index}>
-                      <label className="text-sm">{input.label}</label>
-                      <select
-                        className="w-full mt-1 p-3 rounded-xl bg-gray-50 border border-gray-300 outline-none"
-                        name={input.name}
-                      >
-                        <option disabled>Choose Gender:</option>
-                        {input.options.map((option, index) => (
-                          <option key={index} value={option}>
-                            {option}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                  ) : (
-                    <div>
-                      <label className="text-sm">{input.label}</label>
-                      <input
-                        type={input.type}
-                        name={input.name}
-                        placeholder={input.placeholder}
-                        className="w-full mt-1 p-3 rounded-xl bg-gray-50 border border-gray-300 outline-none"
-                      />
-                    </div>
-                  ),
-                )}
-              </div>
 
-              <button
-                type="submit"
-                className="w-full bg-gray-800 text-white py-3 rounded-xl hover:bg-gray-700 transition"
-              >
-                Create Post
-              </button>
-            </form>
-          </div>
+    
+    <div>
+      <label className="text-sm">Category</label>
+
+      <select
+        name="category_id"
+        value={formData.category_id}
+        onChange={handleChange}
+        className="w-full mt-1 p-3 rounded-xl bg-gray-50 border border-gray-300 outline-none"
+      >
+        <option value="">Select category</option>
+
+        {categories.map((cat) => (
+          <option key={cat.id} value={cat.id}>
+            {cat.name}
+          </option>
+        ))}
+      </select>
+    </div>
+
+  
+    {inputs.map((input, index) => (
+      <div key={index}>
+        <label className="text-sm">{input.label}</label>
+
+        <input
+          type={input.type}
+          name={input.name}
+          value={
+            input.type === "file"
+              ? undefined
+              : formData[input.name]
+          }
+          onChange={handleChange}
+          placeholder={input.placeholder}
+          className="w-full mt-1 p-3 rounded-xl bg-gray-50 border border-gray-300 outline-none"
+        />
+      </div>
+    ))}
+  </div>
+
+
+  <button
+    type="submit"
+    className="w-full bg-gray-800 text-white py-3 rounded-xl hover:bg-gray-700 transition"
+  >
+    Update Post
+  </button>
+</form>
+         </div>
         </div>
       )}
     </div>
@@ -114,3 +244,4 @@ const PostHeader = () => {
 };
 
 export default PostHeader;
+
