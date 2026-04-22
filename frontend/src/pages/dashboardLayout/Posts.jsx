@@ -5,9 +5,10 @@ import PostHeader from "../../components/dashboard/PostHeader";
 const Posts = () => {
   const [dashPosts, setDashPosts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedPosts, setSeectedPosts] = useState(null);
+  const [selectedPosts, setSelectedPosts] = useState(null);
   let [showForm, setShowForm] = useState(false);
   let [categories, setCategories] = useState([]);
+ 
   const fetchCategories = async () => {
     try {
       const res = await fetch("http://localhost:5000/api/categories/read");
@@ -41,8 +42,9 @@ const Posts = () => {
         setShowForm={setShowForm}
         showForm={showForm}
         selectedPosts={selectedPosts}
-        setSeectedPosts={setSeectedPosts}
+        setSeectedPosts={setSelectedPosts}
         categories={categories}
+        fetchPosts
       />
       <PostTable
         setShowForm={setShowForm}
@@ -52,10 +54,12 @@ const Posts = () => {
         setDashPosts={setDashPosts}
         dashPosts={dashPosts}
         selectedPosts={selectedPosts}
-        setSeectedPosts={setSeectedPosts}
+        setSelectedPosts={setSelectedPosts}
+       
       />
     </div>
   );
 };
 
 export default Posts;
+

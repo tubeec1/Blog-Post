@@ -1,12 +1,51 @@
+
+
 import React  from "react";
+import { toast, ToastContainer } from "react-toastify";
 
-const PostTable = ({loading ,dashPosts , showForm , setShowForm ,setSeectedPosts,}) => {
+const PostTable = ({loading ,dashPosts  ,  setDashPosts, setShowForm ,setSelectedPosts}) => {
+const handleDeletePost = async (PostId) => {
+  const confirmDelete = window.confirm(
+    "Are you sure you want to delete this post?"
+  );
 
-  
+  if (!confirmDelete) return;
 
+  try {
+    const token = localStorage.getItem("token");
+
+    const res = await fetch(
+      `http://localhost:5000/api/posts/delete/${PostId}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const result = await res.json();
+
+    if (result.status) {
+      toast.success(result.message);
+
+     
+      setDashPosts((prev) =>
+        prev.filter((post) => post.PostId !== PostId)
+      );
+    } else {
+      toast.error(result.message || "Delete failed");
+    }
+  } catch (error) {
+    console.error(error);
+    toast.error("Something went wrong");
+  }
+};
 
   return (
+    
     <div className="overflow-x-auto overflow-y-auto flex max-h-[72vh]">
+   
       <table className="min-w-full bg-white border border-gray-200 shadow-md rounded-lg ">
         <thead className="bg-gray-100 text-gray-700 sticky top-0 z-10">
           <tr>
@@ -81,14 +120,18 @@ const PostTable = ({loading ,dashPosts , showForm , setShowForm ,setSeectedPosts
                 <td className="py-5 px-3 border space-x-2 flex">
                   <button className="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm"
                      onClick={() => {
-                       setShowForm(true);
-                      setSeectedPosts(post);
-                
-                    }}>
+                      setSelectedPosts(post);
+                      setShowForm(true);
+                    
+               
+ 
+                      }}>
                     Edit
                   </button>
 
-                  <button className="bg-pink-500 hover:bg-pink-600 text-white px-3 py-1 rounded text-sm">
+                  <button className="bg-pink-500 hover:bg-pink-600 text-white px-3 py-1 rounded text-sm"
+                         onClick={() => handleDeletePost(post.PostId)}>
+                
                     Delete
                   </button>
                 </td>
