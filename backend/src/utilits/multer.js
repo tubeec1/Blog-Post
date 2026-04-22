@@ -8,14 +8,14 @@ let storage = multer.diskStorage({
     } else if (file.fieldname === "image") {
       cb(
         null,
-        path.join(__dirname, "../../../backend/public/postsImages/postImages/"),
+        path.join(__dirname, "../../../backend/public/postImages/postImage/"),
       );
     } else if ((file.filename = "thumbnail")) {
       cb(
         null,
         path.join(
           __dirname,
-          "../../../backend/public/postsImages/postThumbnails/",
+          "../../../backend/public/postImages/postThumbnail/",
         ),
       );
     } else {

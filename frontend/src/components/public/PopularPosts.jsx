@@ -62,7 +62,7 @@ const PopularPosts = () => {
                 onClick={() => navigate(`/blogDetails/${post.PostId}`)}
               >
                 <img
-                  src={post.postThumbnail}
+                  src={`http://localhost:5000/public/${post.postThumbnail}`}
                   alt=""
                   className="h-48 w-full object-cover"
                 />

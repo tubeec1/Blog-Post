@@ -8,7 +8,7 @@ const Posts = () => {
   const [selectedPosts, setSelectedPosts] = useState(null);
   let [showForm, setShowForm] = useState(false);
   let [categories, setCategories] = useState([]);
- 
+
   const fetchCategories = async () => {
     try {
       const res = await fetch("http://localhost:5000/api/categories/read");
@@ -19,20 +19,20 @@ const Posts = () => {
     }
   };
 
+  const fetchPosts = async () => {
+    try {
+      const res = await fetch("http://localhost:5000/api/posts/read");
+      const data = await res.json();
+
+      setDashPosts(data?.data || []);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const res = await fetch("http://localhost:5000/api/posts/read");
-        const data = await res.json();
-
-        setDashPosts(data?.data || []);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchPosts();
     fetchCategories();
   }, []);
@@ -44,7 +44,7 @@ const Posts = () => {
         selectedPosts={selectedPosts}
         setSeectedPosts={setSelectedPosts}
         categories={categories}
-        fetchPosts
+        fetchPosts={fetchPosts}
       />
       <PostTable
         setShowForm={setShowForm}
@@ -55,11 +55,9 @@ const Posts = () => {
         dashPosts={dashPosts}
         selectedPosts={selectedPosts}
         setSelectedPosts={setSelectedPosts}
-       
       />
     </div>
   );
 };
 
 export default Posts;
-

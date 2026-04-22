@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 
@@ -41,19 +40,18 @@ const PostHeader = ({
   selectedPosts,
   setSelectedPosts,
   categories,
-  fetchPosts
+  fetchPosts,
 }) => {
   const [postData, setPostData] = useState({
-  postCategoryId: "",
-  postTitle: "",
-  postSlug: "",
-  postContent: "",
-  postImage: null,
-  postThumbnail: null,
-
+    postCategoryId: "",
+    postTitle: "",
+    postSlug: "",
+    postContent: "",
+    postImage: null,
+    postThumbnail: null,
   });
 
- const handleCreatePost = async (e) => {
+  const handleCreatePost = async (e) => {
     e.preventDefault();
 
     const formData = new FormData();
@@ -77,41 +75,37 @@ const PostHeader = ({
 
     const result = await res.json();
 
-  
-
     if (result.status) {
-     
       toast.success(result.message);
-        setShowForm(false);
-         fetchPosts();
-       
+      setShowForm(false);
+      fetchPosts();
     } else {
       toast.error(result.message);
     }
-  }
+  };
 
-useEffect(() => {
-  if (selectedPosts) {
-    setPostData({
+  useEffect(() => {
+    if (selectedPosts) {
+      setPostData({
         postCategoryId: selectedPosts.category_id || "",
-      postTitle: selectedPosts.postTitle || "",
-      postSlug: selectedPosts.postSlug || "",
-      postContent: selectedPosts.postContent || "",
-      postImage: null,
-      postThumbnail: null,
-    });
-  } else {
-    setPostData({
-      postCategoryId: "",
-      postTitle: "",
-      postSlug: "",
-      postContent: "",
-      postImage: null,
-      postThumbnail: null,
-    });
-  }
-}, [selectedPosts]);
- const handleChange = (e) => {
+        postTitle: selectedPosts.postTitle || "",
+        postSlug: selectedPosts.postSlug || "",
+        postContent: selectedPosts.postContent || "",
+        postImage: null,
+        postThumbnail: null,
+      });
+    } else {
+      setPostData({
+        postCategoryId: "",
+        postTitle: "",
+        postSlug: "",
+        postContent: "",
+        postImage: null,
+        postThumbnail: null,
+      });
+    }
+  }, [selectedPosts]);
+  const handleChange = (e) => {
     const { name, value, files, type } = e.target;
 
     setPostData((prev) => ({
@@ -120,64 +114,61 @@ useEffect(() => {
     }));
   };
 
-
   const updatePosts = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  if (!selectedPosts?.PostId) {
-    toast.error("No post selected for update");
-    return;
-  }
-
-  
-  if (!postData.postCategoryId) {
-    toast.error("Please select category");
-    return;
-  }
-
-  
-  const formData = new FormData();
-
-  formData.append("categoryId", postData.postCategoryId);
-  formData.append("title", postData.postTitle);
-  formData.append("slug", postData.postSlug);
-  formData.append("content", postData.postContent);
-
-  if (postData.postImage) {
-    formData.append("image", postData.postImage);
-  }
-
-  if (postData.postThumbnail) {
-    formData.append("thumbnail", postData.postThumbnail);
-  }
-
-  const token = localStorage.getItem("token");
-
-  const res = await fetch(
-    `http://localhost:5000/api/posts/update/${selectedPosts.PostId}`,
-    {
-      method: "PUT",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      body: formData,
+    if (!selectedPosts?.PostId) {
+      toast.error("No post selected for update");
+      return;
     }
-  );
 
-  const result = await res.json();
+    if (!postData.postCategoryId) {
+      toast.error("Please select category");
+      return;
+    }
 
-  if (result.status) {
-    toast.success(result.message);
-     setShowForm(false);
-    setSelectedPosts(null);
-    fetchPosts();
-  } else {
-    toast.error(result.message);
-  }
-};
- 
- return (
- <div>
+    const formData = new FormData();
+
+    formData.append("categoryId", postData.postCategoryId);
+    formData.append("title", postData.postTitle);
+    formData.append("slug", postData.postSlug);
+    formData.append("content", postData.postContent);
+
+    if (postData.postImage) {
+      formData.append("image", postData.postImage);
+    }
+
+    if (postData.postThumbnail) {
+      formData.append("thumbnail", postData.postThumbnail);
+    }
+
+    const token = localStorage.getItem("token");
+
+    const res = await fetch(
+      `http://localhost:5000/api/posts/update/${selectedPosts.PostId}`,
+      {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      },
+    );
+
+    const result = await res.json();
+
+    if (result.status) {
+      toast.success(result.message);
+      setShowForm(false);
+      setSelectedPosts(null);
+      fetchPosts();
+    } else {
+      toast.error(result.message);
+    }
+  };
+
+  return (
+    <div>
       <ToastContainer position="top-center" />
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-2xl font-bold text-pink-500">Posts Dashboard</h1>
@@ -185,17 +176,16 @@ useEffect(() => {
         <button
           className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-md shadow"
           onClick={() => {
-             setShowForm(true);
-           setPostData({
-          postCategoryId: "",
-          postTitle: "",
-           postSlug: "",
-         postContent: "",
-          postImage: null,
-        postThumbnail: null,
-       });
-       setSelectedPosts(null);
-           
+            setShowForm(true);
+            setPostData({
+              postCategoryId: "",
+              postTitle: "",
+              postSlug: "",
+              postContent: "",
+              postImage: null,
+              postThumbnail: null,
+            });
+            setSelectedPosts(null);
           }}
         >
           Create Post
@@ -216,21 +206,27 @@ useEffect(() => {
               </button>
             </div>
 
-            <form className="space-y-4" onSubmit={selectedPosts ? updatePosts : handleCreatePost}>
+            <form
+              className="space-y-4"
+              onSubmit={selectedPosts ? updatePosts : handleCreatePost}
+            >
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 {inputs.map((input, index) => (
                   <div key={index}>
                     <label className="text-sm">{input.label}</label>
-                 
-               <input
-              type={input.type}
-               name={input.name}
-               value={input.type !== "file" ? (postData?.[input.name] || "") : undefined}
-                onChange={handleChange}
-                  placeholder={input.placeholder}
-                className="w-full mt-1 p-3 rounded-xl bg-gray-50 border border-gray-300 outline-none"
-               />
-    
+
+                    <input
+                      type={input.type}
+                      name={input.name}
+                      value={
+                        input.type !== "file"
+                          ? postData?.[input.name] || ""
+                          : undefined
+                      }
+                      onChange={handleChange}
+                      placeholder={input.placeholder}
+                      className="w-full mt-1 p-3 rounded-xl bg-gray-50 border border-gray-300 outline-none"
+                    />
                   </div>
                 ))}
                 <div>
@@ -238,21 +234,18 @@ useEffect(() => {
 
                   <select
                     name="postCategoryId"
-                  
                     value={postData.postCategoryId}
                     onChange={handleChange}
                     className="w-full mt-1 p-3 rounded-xl bg-gray-50 border border-gray-300 outline-none"
                   >
                     <option value="">Select category</option>
 
-                      {categories.map((cat) => (
+                    {categories.map((cat) => (
                       <option key={cat.id} value={cat.id}>
                         {cat.name}
                       </option>
                     ))}
-                    
                   </select>
-                
                 </div>
               </div>
 
