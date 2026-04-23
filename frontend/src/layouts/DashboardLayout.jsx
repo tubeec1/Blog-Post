@@ -4,17 +4,17 @@ import Header from "../components/dashboard/Header";
 import { Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 const DashboardLayout = () => {
   let { user } = useSelector((store) => store.auth);
 
-  let navigate = useNavigate();
   console.log("user", user);
 
   if (!user) {
-    navigate("/");
+    return <Navigate to="/login" />;
   } else if (user.role !== "admin") {
-    navigate("/");
+    return <Navigate to="/" />;
   }
   return (
     <div className="h-screen w-screen flex flex-col md:flex-row p-4 bg-white gap-5">

@@ -14,6 +14,7 @@ import ResetPassword from "../pages/publicLayout/ResetPassword";
 import Dashboard from "../pages/dashboardLayout/Dashboard";
 import Posts from "../pages/dashboardLayout/Posts";
 import Categories from "../pages/dashboardLayout/Categories";
+import NotFound from "../pages/publicLayout/NotFound";
 
 let route = createBrowserRouter([
   {
@@ -55,6 +56,10 @@ let route = createBrowserRouter([
       {
         path: "/reset-password",
         element: <ResetPassword />,
+      },
+      {
+        path: "*",
+        element: <NotFound />,
       },
     ],
   },

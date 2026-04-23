@@ -1,7 +1,6 @@
 import React from "react";
 import { MdCategory } from "react-icons/md";
-import { FaFileAlt } from "react-icons/fa";
-import { FaUsers } from "react-icons/fa";
+import { FaFileAlt, FaUsers } from "react-icons/fa";
 import {
   BarChart,
   Bar,
@@ -9,100 +8,161 @@ import {
   YAxis,
   Tooltip,
   ResponsiveContainer,
-   Cell
+  Cell,
+  CartesianGrid,
 } from "recharts";
+
 let stats = {
   posts: 60,
   categories: 20,
   users: 20,
 };
+
 let data = [
-   { name: "Jan", posts: 40 },
-  { name: "feb", posts: 10 },
-  { name: "March",posts: 20 },
-  { name: "April",posts: 35 },
-  { name: "May", posts:  40 },
-  { name: "Jun", posts:  10 },
-  { name: "Jly", posts:  20 },
-  { name: "Aug", posts:  35 },
+  { name: "Jan", posts: 40 },
+  { name: "Feb", posts: 10 },
+  { name: "Mar", posts: 20 },
+  { name: "Apr", posts: 35 },
+  { name: "May", posts: 40 },
+  { name: "Jun", posts: 10 },
+  { name: "Jul", posts: 20 },
+  { name: "Aug", posts: 35 },
   { name: "Sep", posts: 40 },
-  { name: "Oct", posts:  20 },
+  { name: "Oct", posts: 20 },
   { name: "Nov", posts: 35 },
   { name: "Dec", posts: 40 },
 ];
-const colors = ["#f59e0b",  "#16a34a"];
+
+const colors = ["url(#barGradient)", "url(#barGradient)"];
+
 const Dashboard = () => {
-
   return (
-     <div>
+    <section className="min-h-screen bg-gray-50/60 py-8 sm:py-12">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        {/* ── STATS ── */}
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
+          {/* PRIMARY CARD */}
+          <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-pink-500 to-orange-400 p-6 text-white shadow-lg transition hover:-translate-y-1 hover:shadow-xl">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-xs uppercase tracking-wide text-white/70">
+                  Total Posts
+                </p>
+                <h2 className="mt-1 text-3xl font-extrabold">{stats.posts}</h2>
 
-     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-      
-     
-     
-      <div className="bg-pink-500 text-white p-5 rounded-xl shadow-md flex justify-between items-center">
-  
-  <div>
-    <h3 className="text-xl">Posts</h3>
-    <p className="text-2xl font-bold">{stats.posts}</p>
-  </div>
+                {/* subtle stat */}
+                <p className="mt-1 text-xs text-white/70">↑ 12% this month</p>
+              </div>
 
-  <FaFileAlt className="text-4xl text-white/80" />
+              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/20 group-hover:scale-110 transition">
+                <FaFileAlt className="text-2xl" />
+              </div>
+            </div>
+          </div>
 
-</div>
+          {/* CATEGORY */}
+          <div className="group rounded-2xl bg-white p-6 shadow-sm border border-gray-100 transition hover:-translate-y-1 hover:shadow-md">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-xs text-gray-500 uppercase">Categories</p>
+                <h2 className="mt-1 text-3xl font-bold text-gray-900">
+                  {stats.categories}
+                </h2>
+              </div>
 
+              <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-pink-50 to-orange-50 group-hover:scale-110 transition">
+                <MdCategory className="text-xl text-orange-500" />
+              </div>
+            </div>
+          </div>
 
-      <div className="bg-white text-black p-5 rounded-xl shadow-md flex justify-between items-center">
-  <div>
-    <h3 className="text-xl">Categories</h3>
-    <p className="text-2xl font-bold">{stats.categories}</p>
-  </div>
+          {/* USERS */}
+          <div className="group rounded-2xl bg-white p-6 shadow-sm border border-gray-100 transition hover:-translate-y-1 hover:shadow-md">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-xs text-gray-500 uppercase">Users</p>
+                <h2 className="mt-1 text-3xl font-bold text-gray-900">
+                  {stats.users}
+                </h2>
+              </div>
 
-  <MdCategory className="text-4xl text-pink-500" />
-</div>
-<div className="bg-white text-black p-5 rounded-xl shadow-md flex justify-between items-center">
+              <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-pink-50 to-orange-50 group-hover:scale-110 transition">
+                <FaUsers className="text-xl text-pink-500" />
+              </div>
+            </div>
+          </div>
+        </div>
 
-     <div>
-      <h3 className="text-xl">Users</h3>
-      <p className="text-2xl font-bold">{stats.users}</p>
-      </div>
+        {/* ── CHART ── */}
+        <div className="mt-10 rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
+          {/* HEADER */}
+          <div className="mb-6 flex items-center justify-between">
+            <div>
+              <h2 className="text-lg font-bold text-gray-900">Monthly Posts</h2>
+              <p className="text-xs text-gray-400">
+                Overview of content activity
+              </p>
+            </div>
 
-      <FaUsers className="text-4xl text-pink-500" />
+            <span className="rounded-full bg-gray-50 px-3 py-1 text-xs text-gray-500">
+              2025
+            </span>
+          </div>
 
-     </div>
+          <div className="overflow-x-auto">
+            <div className="min-w-[600px] h-[320px]">
+              <ResponsiveContainer>
+                <BarChart data={data}>
+                  {/* GRADIENT */}
+                  <defs>
+                    <linearGradient
+                      id="barGradient"
+                      x1="0"
+                      y1="0"
+                      x2="0"
+                      y2="1"
+                    >
+                      <stop offset="0%" stopColor="#ec4899" />
+                      <stop offset="100%" stopColor="#f97316" />
+                    </linearGradient>
+                  </defs>
 
-    </div>
-    <div className="bg-white p-6 rounded-xl shadow-md mt-10">
-  
+                  {/* GRID FIX */}
+                  <CartesianGrid stroke="#f3f4f6" vertical={false} />
 
-      <h2 className="text-lg font-semibold mb-4">Monthly Posts</h2>
+                  <XAxis
+                    dataKey="name"
+                    axisLine={false}
+                    tickLine={false}
+                    tick={{ fill: "#9ca3af", fontSize: 12 }}
+                  />
 
-      <div className="overflow-x-auto">
-        <div className="min-w-[600px] h-[300px]">
-         
-          <ResponsiveContainer>
-         <BarChart data={data} barCategoryGap="20%">
-        
-        <XAxis dataKey="name" angle={30} textAnchor="end" />
-        <YAxis />
-        <Tooltip />
+                  <YAxis
+                    axisLine={false}
+                    tickLine={false}
+                    tick={{ fill: "#9ca3af", fontSize: 12 }}
+                  />
 
-        <Bar dataKey="posts" barSize={50}>
-          {data.map((entry, index) => (
-            <Cell
-              key={`cell-${index}`}
-              fill={colors[index % 2]}
-            />
-          ))}
-        </Bar>
+                  <Tooltip
+                    contentStyle={{
+                      borderRadius: "10px",
+                      border: "1px solid #eee",
+                      fontSize: "13px",
+                    }}
+                  />
 
-      </BarChart>
-    </ResponsiveContainer>
+                  <Bar dataKey="posts" radius={[6, 6, 0, 0]} barSize={26}>
+                    {data.map((_, i) => (
+                      <Cell key={i} fill={colors[i % 2]} />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-     </div>
-    
+    </section>
   );
 };
 

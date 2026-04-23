@@ -5,6 +5,8 @@ import { MdOutlineCategory } from "react-icons/md";
 import { IoMdLogOut } from "react-icons/io";
 
 import { GiPostStamp } from "react-icons/gi";
+import { useDispatch } from "react-redux";
+import { logout } from "../../features/auth/authSlice";
 
 let links = [
   {
@@ -30,6 +32,7 @@ let links = [
 ];
 
 const SidebarDashboard = () => {
+  let dispatch = useDispatch();
   return (
     <div className="w-[100vw] md:min-h-[96vh] py-5  md:w-[20%] bg-gray-50 shadow-md">
       <div className="py-5 px-2 flex justify-center items-center">
@@ -41,15 +44,28 @@ const SidebarDashboard = () => {
         <h2 className="font-bold text-xl text-pink-500">Blogosphere</h2>
       </div>
       <div className="flex flex-col gap-y-4">
-        {links.map((link, index) => (
-          <Link
-            className="bg-white w-[90%] text-gray-600 md:w-[100%] mx-auto flex flex-row items-center gap-x-3 shadow-md px-2 py-3 rounded hover:bg-pink-500 hover:text-white hover:-translate-y-1 transition duration-300"
-            to={link.path}
-          >
-            {link.icon}
-            {link.name}
-          </Link>
-        ))}
+        {links.map((link, index) =>
+          link.name == "Logout" ? (
+            <Link
+              className="bg-white w-[90%] text-gray-600 md:w-[100%] mx-auto flex flex-row items-center gap-x-3 shadow-md px-2 py-3 rounded hover:bg-pink-500 hover:text-white hover:-translate-y-1 transition duration-300"
+              to={link.path}
+              onClick={() => {
+                dispatch(logout());
+              }}
+            >
+              {link.icon}
+              {link.name}
+            </Link>
+          ) : (
+            <Link
+              className="bg-white w-[90%] text-gray-600 md:w-[100%] mx-auto flex flex-row items-center gap-x-3 shadow-md px-2 py-3 rounded hover:bg-pink-500 hover:text-white hover:-translate-y-1 transition duration-300"
+              to={link.path}
+            >
+              {link.icon}
+              {link.name}
+            </Link>
+          ),
+        )}
       </div>
     </div>
   );
