@@ -5,12 +5,13 @@ const LatestPosts = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+    
   useEffect(() => {
-    const fetchPosts = async () => {
+    const fetchPosts = async (page =1) => {
+   
       try {
-        // 🔁 keep your real API here
-        const res = await fetch("http://localhost:5000/api/posts/read");
+          const  limit =6;
+        const res = await fetch(`http://localhost:5000/api/posts/read?page=${page}&limit=${limit}`);
         const data = await res.json();
         if (data.status) {
           setPosts(data.data);

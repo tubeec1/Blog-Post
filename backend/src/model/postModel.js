@@ -20,9 +20,7 @@ const createPost = async (
 module.exports = { createPost };
 
 const getAllPosts = async (order) => {
-  const [rows] =
-   
-      await con.execute(`
+  const [rows] = await con.execute(`
     SELECT 
       users.name AS "userName",
       users.email AS "userEmail",

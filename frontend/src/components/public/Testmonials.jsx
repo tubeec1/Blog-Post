@@ -26,38 +26,59 @@ const testimonials = [
 
 const Testimonial = () => {
   return (
-    <section className="py-16 bg-gray-50  max-w-[1200px] mx-auto">
-      <h2 className="text-3xl font-bold text-center  mb-10">What People Say</h2>
+   <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-[1100px] mx-auto px-6">
-        {testimonials.map((item) => (
-          <div
-            key={item.id}
-            className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition duration-300"
-          >
-            <p className="text-gray-600 text-sm mb-4 text-justify leading-relaxed">
-              <span className="text-3xl text-gray-600 px-3">❝</span>
-              {item.text}
-              <span className="text-3xl text-gray-600 px-3">❞</span>
-            </p>
+  {/* HEADER */}
+  <div className="text-center mb-14 px-6">
+    <h2 className="text-4xl font-bold text-gray-900">
+      What People Say
+    </h2>
+    <p className="mt-3 text-gray-500 text-sm sm:text-base">
+      Real feedback from our happy users
+    </p>
+  </div>
 
-            <div className="flex items-center gap-3 mt-4">
-              <img
-                src={item.image}
-                alt={item.name}
-                className="w-12 h-12 rounded-full object-cover"
-              />
+  {/* GRID */}
+  <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
 
-              <div>
-                <h4 className="font-semibold">{item.name}</h4>
-                <p className="text-xs text-gray-400">{item.role}</p>
-              </div>
-            </div>
+    {testimonials.map((item) => (
+      <div
+        key={item.id}
+        className="group relative bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition duration-300 hover:-translate-y-2"
+      >
+
+        {/* QUOTE ICON */}
+        <div className="text-5xl text-pink-500 opacity-20 absolute top-4 left-4">
+          ❝
+        </div>
+
+        {/* TEXT */}
+        <p className="text-gray-600 text-sm leading-relaxed mt-6 mb-6">
+          {item.text}
+        </p>
+
+        {/* USER */}
+        <div className="flex items-center gap-4 pt-4 border-t border-gray-100">
+          <img
+            src={item.image}
+            alt={item.name}
+            className="w-12 h-12 rounded-full object-cover ring-2 ring-pink-100"
+          />
+
+          <div>
+            <h4 className="font-semibold text-gray-900 group-hover:text-pink-600 transition">
+              {item.name}
+            </h4>
+            <p className="text-xs text-gray-400">{item.role}</p>
           </div>
-        ))}
-      </div>
-    </section>
-  );
-};
+        </div>
 
+      </div>
+    ))}
+
+  </div>
+
+</section>
+  )
+}
 export default Testimonial;
