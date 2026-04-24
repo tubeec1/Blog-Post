@@ -12,7 +12,9 @@ const Categories = () => {
     try {
       const res = await fetch("http://localhost:5000/api/categories/read");
       const data = await res.json();
+
       setCategories(data.data);
+        console.log("data categories maxaa" , data)
     } catch (error) {
       console.log(error);
     }

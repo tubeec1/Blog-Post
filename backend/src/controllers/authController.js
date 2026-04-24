@@ -68,4 +68,12 @@ let login = asyncHandler(async (req, res) => {
 
   return res.json(response);
 });
-module.exports = { Signup, login, updateProfile, getProfile };
+
+
+
+
+const getUsersCountController = async (req, res) => {
+let response = await authservice.getUsersCount()
+return res.json(response)
+};
+module.exports = { Signup, login, updateProfile, getProfile, getUsersCountController };

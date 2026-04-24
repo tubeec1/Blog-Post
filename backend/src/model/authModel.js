@@ -46,4 +46,12 @@ let updateProfile = async (
   return response[0].affectedRows;
 };
 
-module.exports = { Signup, findByEmail, updateProfile, findById };
+
+const countUsers = async () => {
+  const [rows] = await con.query("SELECT COUNT(*) AS count FROM users");
+  return rows[0].count;
+};
+
+
+
+module.exports = { Signup, findByEmail, updateProfile, findById ,countUsers};

@@ -92,10 +92,20 @@ const deletePost = asyncHandler(async (req, res) => {
 
   return res.json(response);
 });
+
+
+
+
+const getPostsCountController = async (req, res) => {
+ let response = await postService.getPostsCount()
+ return res.json(response)
+};
+
 module.exports = {
   createPost,
   getAllPosts,
   getPostById,
   updatePost,
   deletePost,
+  getPostsCountController 
 };

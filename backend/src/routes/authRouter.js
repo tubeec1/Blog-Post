@@ -31,5 +31,6 @@ router.post(
   validationMiddleware,
   authController.login,
 );
+router.get( "/usersCount",authController.getUsersCountController);
 
 module.exports = router;

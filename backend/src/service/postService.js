@@ -95,6 +95,14 @@ const deletePost = async (postId) => {
     message: "successfully deleted",
   };
 };
+const getPostsCount = async () => {
+  let response = await postModel.countPosts();
+    return{
+    status:"true",
+    message:"succsefull posts count",
+    response:response
+  }
+}
 
 module.exports = {
   createPost,
@@ -102,4 +110,6 @@ module.exports = {
   getPostById,
   updatePost,
   deletePost,
+  getAllPosts,
+  getPostsCount
 };

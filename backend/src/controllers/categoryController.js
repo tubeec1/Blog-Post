@@ -39,10 +39,14 @@ const deleteCategory = asyncHandler(async (req, res) => {
 
   return res.json(response);
 });
-
+const getCategoriesCountController = asyncHandler(async (req, res) => {
+let response = await CategoryService.getCategoriesCount();
+  return res.json(response);
+});
 module.exports = {
   createCategory,
   getAllCategories,
   updateCategory,
   deleteCategory,
+  getCategoriesCountController
 };

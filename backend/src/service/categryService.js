@@ -31,6 +31,15 @@ const CategoryService = {
       message: "Category deleted successfully",
     };
   },
+   getCategoriesCount : async () => {
+    let response= await CategoryModel.countCategories();
+     return{
+    status:"true",
+    message:"succsefull categories count",
+    response:response
+  }
+},
+
 };
 
 module.exports = CategoryService;

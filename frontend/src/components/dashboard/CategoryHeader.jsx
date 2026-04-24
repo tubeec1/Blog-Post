@@ -51,7 +51,7 @@ const CategoryHeader = ({
   );
 
   const data = await res.json();
-
+  
   if (data.status) {
     toast.success("Created successfully");
     setShowForm(false);

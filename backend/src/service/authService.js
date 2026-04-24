@@ -113,4 +113,14 @@ let updateProfile = async (
   };
 };
 
-module.exports = { Signup, login, updateProfile, getProfile };
+const getUsersCount = async () => {
+  let response = await  authModel.countUsers();
+  return{
+    status:"true",
+    message:"succsefull users count",
+    response:response
+  }
+};
+
+
+module.exports = { Signup, login, updateProfile, getProfile ,getUsersCount };

@@ -41,4 +41,5 @@ router.delete(
   authMiddleware,
   postController.deletePost,
 );
+router.get("/postsCount" ,postController.getPostsCountController)
 module.exports = router;

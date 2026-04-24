@@ -240,7 +240,7 @@ const PostHeader = ({
                   >
                     <option value="">Select category</option>
 
-                    {categories.map((cat) => (
+                    {categories ?.map((cat) => (
                       <option key={cat.id} value={cat.id}>
                         {cat.name}
                       </option>

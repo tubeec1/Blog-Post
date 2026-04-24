@@ -13,6 +13,7 @@ const Posts = () => {
     try {
       const res = await fetch("http://localhost:5000/api/categories/read");
       const data = await res.json();
+      
       setCategories(data.data);
     } catch (error) {
       console.log(error);
@@ -39,12 +40,12 @@ const Posts = () => {
   return (
     <div className="p-6 ">
       <PostHeader
-        setShowForm={setShowForm}
-        showForm={showForm}
-        selectedPosts={selectedPosts}
-        setSeectedPosts={setSelectedPosts}
-        categories={categories}
-        fetchPosts={fetchPosts}
+       setShowForm={setShowForm}
+    showForm={showForm}
+    selectedPosts={selectedPosts}
+    setSelectedPosts={setSelectedPosts}
+    categories={categories}
+     fetchPosts={fetchPosts}
       />
       <PostTable
         setShowForm={setShowForm}

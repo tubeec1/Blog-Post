@@ -7,6 +7,7 @@ import { IoMdLogOut } from "react-icons/io";
 import { GiPostStamp } from "react-icons/gi";
 import { useDispatch } from "react-redux";
 import { logout } from "../../features/auth/authSlice";
+import { IoMdHome } from "react-icons/io";
 
 let links = [
   {
@@ -29,6 +30,11 @@ let links = [
     path: "/",
     icon: <IoMdLogOut />,
   },
+ {
+  name: "Go Home",
+  path: "/",
+  icon: <IoMdHome />,
+}
 ];
 
 const SidebarDashboard = () => {

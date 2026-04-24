@@ -21,12 +21,7 @@ module.exports = { createPost };
 
 const getAllPosts = async (order) => {
   const [rows] =
-    // await con.execute(`select users.name as "userName", users.email as "userEmail", users.gender as "userGender", users.role "userEmail", users.profile_image as "userProfileImage", posts.id AS "PostId", posts.title as "postTitle", posts.slug as "postSlug", posts.content AS "postContent", posts.thumbnail as "postThumbnail", posts.image AS "postImage", posts.created_at as "postCreatedAt", categories.name as "categoryName", categories.slug as "categorySlug"
-    // from posts
-    // join users on posts.user_id = users.id
-    // join categories on posts.category_id = categories.id
-    // order by posts.created_at ${order}
-    // `);
+   
       await con.execute(`
     SELECT 
       users.name AS "userName",
@@ -57,65 +52,7 @@ const getAllPosts = async (order) => {
   return rows;
 };
 let getPostsByPageAndLimit = async (page, limit, offset, order) => {
-  // const [rows] = await con.execute(
-  //   `select users.name as "userName", users.email as "userEmail", users.gender as "userGender", users.role "userEmail", users.profile_image as "userProfileImage", posts.id AS "PostId", posts.title as "postTitle", posts.slug as "postSlug", posts.content AS "postContent", posts.thumbnail as "postThumbnail", posts.image AS "postImage", posts.created_at as "postCreatedAt", categories.name as "categoryName", categories.slug as "categorySlug"
-  //   from posts
-  //   join users on posts.user_id = users.id
-  //   join categories on posts.category_id = categories.id
-  //   order by posts.created_at ${order}
-  //   limit ? offset ? 
-    
-  //   `,
-  //   [limit, offset],
-  // );
-//     const [rows] = await con.execute(
-//     `
-//     // SELECT 
-//     //   users.name AS "userName",
-//     //   users.email AS "userEmail",
-//     //   users.gender AS "userGender",
-//     //   users.role AS "userRole",
-//     //   users.profile_image AS "userProfileImage",
-
-//     //   posts.id AS "PostId",
-//     //   posts.title AS "postTitle",
-//     //   posts.slug AS "postSlug",
-//     //   posts.content AS "postContent",
-//     //   posts.thumbnail AS "postThumbnail",
-//     //   posts.image AS "postImage",
-//     //   posts.created_at AS "postCreatedAt",
-
-//     //   categories.name AS "categoryName",
-//     //   categories.slug AS "categorySlug"
-
-//     // FROM posts
-//     // LEFT JOIN users ON posts.user_id = users.id
-//     SELECT 
-//   posts.id AS "PostId",
-//   posts.title AS "postTitle",
-//   posts.slug AS "postSlug",
-//   posts.content AS "postContent",
-//   posts.thumbnail AS "postThumbnail",
-//   posts.image AS "postImage",
-//   posts.created_at AS "postCreatedAt",
-
-//   categories.id AS "category_id",   -- ✅ ADD THIS
-//   categories.name AS "categoryName",
-//   categories.slug AS "categorySlug"
-
-// FROM posts
-// LEFT JOIN categories ON posts.category_id = categories.id
-//     LEFT JOIN categories ON posts.category_id = categories.id
-
-//     ORDER BY posts.created_at ${order}
-//     LIMIT ? OFFSET ?
-//     `,
-//     [limit, offset]
-//   );
-
-//   return rows;
-// };
-
+  
 const [rows] = await con.execute(
   `
   SELECT 
@@ -133,13 +70,13 @@ const [rows] = await con.execute(
     posts.image AS "postImage",
     posts.created_at AS "postCreatedAt",
 
-    categories.id AS "category_id",        -- ✅ muhiim
+    categories.id AS "category_id",        
     categories.name AS "categoryName",
     categories.slug AS "categorySlug"
 
   FROM posts
   LEFT JOIN users ON posts.user_id = users.id
-  LEFT JOIN categories ON posts.category_id = categories.id   -- ✅ hal mar oo kaliya
+  LEFT JOIN categories ON posts.category_id = categories.id  
 
   ORDER BY posts.created_at ${order}
   LIMIT ? OFFSET ?
@@ -181,6 +118,10 @@ const deletePost = async (postId) => {
 
   return result.affectedRows;
 };
+const countPosts = async () => {
+  const [rows] = await con.query("SELECT COUNT(*) AS count FROM posts");
+  return rows[0].count;
+};
 module.exports = {
   createPost,
   getAllPosts,
@@ -188,4 +129,5 @@ module.exports = {
   updatePost,
   deletePost,
   getPostsByPageAndLimit,
+  countPosts
 };

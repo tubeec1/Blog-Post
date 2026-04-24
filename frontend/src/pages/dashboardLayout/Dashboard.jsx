@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { MdCategory } from "react-icons/md";
 import { FaFileAlt, FaUsers } from "react-icons/fa";
 import {
@@ -12,11 +12,7 @@ import {
   CartesianGrid,
 } from "recharts";
 
-let stats = {
-  posts: 60,
-  categories: 20,
-  users: 20,
-};
+
 
 let data = [
   { name: "Jan", posts: 40 },
@@ -36,6 +32,38 @@ let data = [
 const colors = ["url(#barGradient)", "url(#barGradient)"];
 
 const Dashboard = () => {
+  const [stats, setStats] = useState({
+  users: 0,
+  posts: 0,
+  categories: 0,
+});
+useEffect(() => {
+  const fetchStats = async () => {
+    try {
+      const [usersRes, postsRes, categoriesRes] = await Promise.all([
+        fetch("http://localhost:5000/api/auth/usersCount"),
+        fetch("http://localhost:5000/api/posts/postsCount"),
+        fetch("http://localhost:5000/api/categories/categoryCount"),
+      ]);
+
+      const users = await usersRes.json();
+      const posts = await postsRes.json();
+      const categories = await categoriesRes.json();
+
+      setStats({
+
+        users: users.response,
+        posts: posts.response,
+        categories: categories.response,
+     });
+      console.log("users:" ,users)
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  fetchStats();
+}, []);
   return (
     <section className="min-h-screen bg-gray-50/60 py-8 sm:py-12">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
@@ -64,7 +92,7 @@ const Dashboard = () => {
           <div className="group rounded-2xl bg-white p-6 shadow-sm border border-gray-100 transition hover:-translate-y-1 hover:shadow-md">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-xs text-gray-500 uppercase">Categories</p>
+                <p className="text-xs text-gray-500 uppercase">categories</p>
                 <h2 className="mt-1 text-3xl font-bold text-gray-900">
                   {stats.categories}
                 </h2>

@@ -6,6 +6,7 @@ const {
   getAllCategories,
   updateCategory,
   deleteCategory,
+  getCategoriesCountController
 } = require("../controllers/categoryController");
 const authMiddleware = require("../middleWare/authMiddleWare");
 const {
@@ -37,5 +38,7 @@ router.delete(
   validationMiddleware,
   deleteCategory,
 );
+
+router.get("/categoryCount" ,getCategoriesCountController);
 
 module.exports = router;

@@ -32,6 +32,12 @@ const CategoryModel = {
     const [result] = await con.execute(query, [categoryId]);
     return result;
   },
+  countCategories : async () => {
+  const [rows] = await con.query("SELECT COUNT(*) AS count FROM categories");
+  return rows[0].count;
+},
 };
 
-module.exports = CategoryModel;
+
+
+module.exports = CategoryModel ;

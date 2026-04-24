@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect,  } from "react";
 import { toast } from "react-toastify";
 
 const CategoryTable = ({
@@ -62,7 +62,7 @@ const CategoryTable = ({
         </thead>
 
         <tbody>
-          {categories.map((cat) => (
+          {categories ?.map((cat) => (
             <tr key={cat.id} className="text-center border-t p-6">
               <td>{cat.id}</td>
               <td>{cat.name}</td>
