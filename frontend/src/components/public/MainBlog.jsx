@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const MainBlog = () => {
+  const [search , setSearch]= useState("")
   let [posts, setPosts] = useState({
     allPosts: [],
     numberOfPages: [],
@@ -45,6 +46,27 @@ const MainBlog = () => {
     fetchAllPosts();
     fetchRecentPosts(posts.page);
   }, []);
+  const handleSearch = async (value) => {
+  setSearch(value);
+
+  if (!value.trim()) {
+    fetchRecentPosts(1)
+    return;
+  }
+
+  const res = await fetch(
+    `http://localhost:5000/api/posts/read?search=${value}`
+  );
+
+  const data = await res.json();
+
+  if (data.status) {
+    setPosts((prev) => ({
+      ...prev,
+      recentPosts: data.data,
+    }));
+  }
+};
   return (
     <div className="w-[80%] p-4 ">
       <div className="flex flex-col md:flex-row justify-between gap-5">
@@ -53,6 +75,8 @@ const MainBlog = () => {
           <input
             type="text"
             placeholder="Search..."
+            value={search}
+            onChange={(e)=>handleSearch(e.target.value)}
             className="border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:ring-2 focus:ring-orange-500"
           />
           <button
