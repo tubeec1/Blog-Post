@@ -1,4 +1,7 @@
 const postModel = require("../model/postModel");
+const categoryModel = require("../model/categoryModel");
+const authModel = require("../model/authModel");
+const AppError = require("../utilits/AppError");
 
 const createPost = async (
   userId,
@@ -26,8 +29,16 @@ const createPost = async (
   };
 };
 
-const getAllPosts = async (page, limit, order) => {
-  if (!page && !limit) {
+const getAllPosts = async (page, limit, order, search) => {
+  if (search) {
+    let response = await postModel.getPostsBySearch(order, search);
+    if (response.length < 1) throw new AppError("No posts found", 404);
+    return {
+      status: true,
+      message: "successfully Reading",
+      data: response,
+    };
+  } else if (!page && !limit) {
     let response = await postModel.getAllPosts(order);
     return {
       status: true,
@@ -97,12 +108,23 @@ const deletePost = async (postId) => {
 };
 const getPostsCount = async () => {
   let response = await postModel.countPosts();
-    return{
-    status:"true",
-    message:"succsefull posts count",
-    response:response
-  }
-}
+  return {
+    status: "true",
+    message: "succsefull posts count",
+    response: response,
+  };
+};
+
+let getStats = async () => {
+  // get count of posts
+  let postsCount = await postModel.countPosts();
+
+  return {
+    status: true,
+    message: "all stats data is here",
+    data: postsCount,
+  };
+};
 
 module.exports = {
   createPost,
@@ -111,5 +133,6 @@ module.exports = {
   updatePost,
   deletePost,
   getAllPosts,
-  getPostsCount
+  getPostsCount,
+  getStats,
 };

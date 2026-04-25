@@ -14,7 +14,7 @@ const Categories = () => {
       const data = await res.json();
 
       setCategories(data.data);
-        console.log("data categories maxaa" , data)
+      console.log("data categories maxaa", data);
     } catch (error) {
       console.log(error);
     }
@@ -28,7 +28,6 @@ const Categories = () => {
         selectedCategory={selectedCategory}
         setSelectedCategory={selectedCategory}
         fetchCategories={fetchCategories}
-
       />
       <CategoryTable
         categories={categories}

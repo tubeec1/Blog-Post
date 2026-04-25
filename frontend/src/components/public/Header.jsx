@@ -1,11 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { FiMenu, FiX, FiLogOut, FiChevronDown } from "react-icons/fi";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../features/auth/authSlice";
 
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { user } = useSelector((store) => store.auth);
+  let dispatch = useDispatch();
 
   const [profileOpen, setProfileOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -45,11 +47,6 @@ const Header = () => {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
     return () => (document.body.style.overflow = "");
   }, [mobileOpen]);
-
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    setProfileOpen(false);
-  };
 
   const isActive = (path) => location.pathname === path;
 
@@ -122,6 +119,7 @@ const Header = () => {
                     onClick={() => setProfileOpen(!profileOpen)}
                     className="flex items-center gap-2 rounded-xl px-2 py-1 hover:bg-gray-100 transition"
                   >
+                    {console.log("user checking hs or her data", user)}
                     <img
                       src={`http://localhost:5000/public/${user.profileImage}`}
                       alt="profile"
@@ -163,7 +161,10 @@ const Header = () => {
                     )}
                     <div className="mt-2 border-t pt-2">
                       <button
-                        onClick={handleLogout}
+                        onClick={() => {
+                          dispatch(logout());
+                          setProfileOpen(false);
+                        }}
                         className="flex items-center gap-2 w-full px-3 py-2 text-sm text-rose-500 hover:bg-rose-50 rounded-lg"
                       >
                         <FiLogOut />

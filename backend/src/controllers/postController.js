@@ -34,7 +34,9 @@ const getAllPosts = asyncHandler(async (req, res) => {
   let page = parseInt(req.query.page) || null;
   let limit = parseInt(req.query.limit) || null;
   let order = req.query.order || "asc";
-  let response = await postService.getAllPosts(page, limit, order);
+  let search = req.query.search || null;
+
+  let response = await postService.getAllPosts(page, limit, order, search);
   return res.json(response);
 });
 
@@ -93,13 +95,15 @@ const deletePost = asyncHandler(async (req, res) => {
   return res.json(response);
 });
 
-
-
-
 const getPostsCountController = async (req, res) => {
- let response = await postService.getPostsCount()
- return res.json(response)
+  let response = await postService.getPostsCount();
+  return res.json(response);
 };
+
+let getStats = asyncHandler(async (req, res) => {
+  let response = await postService.getStats();
+  return res.json(response);
+});
 
 module.exports = {
   createPost,
@@ -107,5 +111,6 @@ module.exports = {
   getPostById,
   updatePost,
   deletePost,
-  getPostsCountController 
+  getPostsCountController,
+  getStats,
 };

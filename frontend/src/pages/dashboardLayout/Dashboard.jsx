@@ -11,8 +11,8 @@ import {
   Cell,
   CartesianGrid,
 } from "recharts";
-
-
+import { ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
 let data = [
   { name: "Jan", posts: 40 },
@@ -33,39 +33,35 @@ const colors = ["url(#barGradient)", "url(#barGradient)"];
 
 const Dashboard = () => {
   const [stats, setStats] = useState({
-  users: 0,
-  posts: 0,
-  categories: 0,
-});
-useEffect(() => {
-  const fetchStats = async () => {
-    try {
-      const [usersRes, postsRes, categoriesRes] = await Promise.all([
-        fetch("http://localhost:5000/api/auth/usersCount"),
-        fetch("http://localhost:5000/api/posts/postsCount"),
-        fetch("http://localhost:5000/api/categories/categoryCount"),
-      ]);
+    users: 0,
+    posts: 0,
+    categories: 0,
+  });
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const res = await fetch("http://localhost:5000/api/posts/stats");
 
-      const users = await usersRes.json();
-      const posts = await postsRes.json();
-      const categories = await categoriesRes.json();
+        const data = await res.json();
+        if (data.status) {
+          setStats({
+            users: data.data.countUsers,
+            posts: data.data.countPosts,
+            categories: data.data.countCategories,
+          });
+        } else {
+          toast.error(data.message);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-      setStats({
-
-        users: users.response,
-        posts: posts.response,
-        categories: categories.response,
-     });
-      console.log("users:" ,users)
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  fetchStats();
-}, []);
+    fetchStats();
+  }, []);
   return (
     <section className="min-h-screen bg-gray-50/60 py-8 sm:py-12">
+      <ToastContainer position="top-center" />
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* ── STATS ── */}
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">

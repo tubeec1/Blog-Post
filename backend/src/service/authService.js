@@ -65,7 +65,7 @@ let login = async (email, password) => {
     email: user.email,
     gender: user.gender,
     role: user.role,
-    profileImge: user.profile_image,
+    profileImage: user.profile_image,
   };
   return {
     status: true,
@@ -114,13 +114,12 @@ let updateProfile = async (
 };
 
 const getUsersCount = async () => {
-  let response = await  authModel.countUsers();
-  return{
-    status:"true",
-    message:"succsefull users count",
-    response:response
-  }
+  let response = await authModel.countUsers();
+  return {
+    status: "true",
+    message: "succsefull users count",
+    response: response,
+  };
 };
 
-
-module.exports = { Signup, login, updateProfile, getProfile ,getUsersCount };
+module.exports = { Signup, login, updateProfile, getProfile, getUsersCount };
